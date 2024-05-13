@@ -1,4 +1,4 @@
-
+项目基于Qt库开发
 ```
 demo
 ├─ demo.pro.user
@@ -78,5 +78,4 @@ demo
    ├─ startmenu.cpp
    ├─ startmenu.h
    └─ startmenu.ui
-
 ```
