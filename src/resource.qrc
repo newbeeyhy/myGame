@@ -1,0 +1,30 @@
+<RCC>
+    <qresource prefix="/image">
+        <file>recourse/block/c.png</file>
+        <file>recourse/block/d.png</file>
+        <file>recourse/block/l.png</file>
+        <file>recourse/block/ld.png</file>
+        <file>recourse/block/r.png</file>
+        <file>recourse/block/rd.png</file>
+        <file>recourse/block/gc.png</file>
+        <file>recourse/block/gd.png</file>
+        <file>recourse/block/gl.png</file>
+        <file>recourse/block/gld.png</file>
+        <file>recourse/block/glu.png</file>
+        <file>recourse/block/gr.png</file>
+        <file>recourse/block/grd.png</file>
+        <file>recourse/block/gru.png</file>
+        <file>recourse/block/gu.png</file>
+        <file>recourse/monster/bat-x4.gif</file>
+        <file>recourse/monster/frog-x4.gif</file>
+        <file>recourse/monster/ghost-x4.gif</file>
+        <file>recourse/monster/skeleton-x4.gif</file>
+        <file>recourse/monster/bat-x4-fliped.gif</file>
+        <file>recourse/monster/frog-x4-fliped.gif</file>
+        <file>recourse/monster/ghost-x4-fliped.gif</file>
+        <file>recourse/monster/skeleton-x4-fliped.gif</file>
+        <file>recourse/monster/archer.gif</file>
+        <file>recourse/monster/archer-fliped.gif</file>
+        <file>recourse/tower/BloodMoonTower.gif</file>
+    </qresource>
+</RCC>

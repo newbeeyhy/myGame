@@ -1,0 +1,6 @@
+bat
+:/image/recourse/monster/bat-x4.gif
+:/image/recourse/monster/bat-x4-fliped.gif
+200 200 0 10 0 10 0 3 25 50
+30 30 40 40
+1430 30 1430 230 30 230 30 430 1430 430 1430 630 30 630 30 830 1430 830;
