@@ -2,13 +2,16 @@
 #include "mytower.h"
 #include "myblock.h"
 
-myTower::myTower(int xx, int yy, const QString &data, QWidget *parent): myCharacter(parent) {
+myTower::myTower(int xx, int yy, const QString &data, QWidget *parent): myCharacter(parent) { //构造函数
+    //读取防御塔文件
     QFile file(data);
     file.open(QFile::ReadOnly);
+    //载入图像资源
     name = QString::fromUtf8(file.readLine()).chopped(2);
     movie = new QMovie(QString::fromUtf8(file.readLine()).chopped(2));
     movief = new QMovie(QString::fromUtf8(file.readLine()).chopped(2));
     this->setMovie(movie);
+    //读取防御塔数值
     std::string s = file.readLine().toStdString();
     getpro(s);
     s = file.readLine().toStdString();
@@ -17,6 +20,7 @@ myTower::myTower(int xx, int yy, const QString &data, QWidget *parent): myCharac
         type = type * 10 + s[i] - '0';
         i++;
     }
+    //读取并设置初始位置和大小
     s = file.readLine().toStdString();
     n = s.length();
     i = 0;
@@ -32,6 +36,7 @@ myTower::myTower(int xx, int yy, const QString &data, QWidget *parent): myCharac
     this->setGeometry(xx, yy, a[0], a[1]);
     this->setScaledContents(true);
     this->show();
+    //读取防御塔攻击范围
     s = file.readLine().toStdString();
     n = s.length(); i = 0;
     for (int j = 0; ; j++) {
@@ -53,13 +58,15 @@ myTower::myTower(int xx, int yy, const QString &data, QWidget *parent): myCharac
     }
 }
 
-void myTower::act() {
+void myTower::act() { //防御塔活动逻辑
     if (alive == false || beset == false) return;
+    //更新所在地块
     if (belong == nullptr) {
         int x = this->x() / 100, y = this->y() / 100;
         belong = isin->block[y * 15 + x];
         isin->block[y * 15 + x]->tower = this;
     }
+    //检测攻击范围内的单位
     atk.clear();
     int x = this->x() / 100, y = this->y() / 100;
     int m = area.size();
@@ -69,6 +76,7 @@ void myTower::act() {
             atk.push_back(isin->block[(y + dy) * 15 + (x + dx)]);
         }
     }
+    //选取单位进行攻击
     int n = atk.size(), mn = 0x7fffffff;
     myMonster *id = nullptr;
     for (int i = 0; i < n; i++) {

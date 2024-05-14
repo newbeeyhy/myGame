@@ -5,19 +5,21 @@
 #include "mytower.h"
 #include "myblock.h"
 
-GameWindow::GameWindow(QWidget *parent): QWidget(parent), ui(new Ui::GameWindow) {
+GameWindow::GameWindow(QWidget *parent): QWidget(parent), ui(new Ui::GameWindow) { //构造函数
     ui->setupUi(this);
     InitGameWindow();
 }
 
-void GameWindow::InitGameWindow() {
+void GameWindow::InitGameWindow() { //初始化窗口
+    // 初始化计时器
     timer = new QTimer(this);
     ui->labelcost->setText(QString::number(cost));
     connect(timer, QTimer::timeout, this, GameWindow::onTimer);
+    // 加载关卡文件
     this->setWindowTitle(QString("LEVEL") + QString("1"));
     QFile file(QString("C:/YHY/work/vscode/demo/src/level/") + QString("1") + QString("/map.txt"));
     file.open(QFile::ReadOnly);
-    // block
+    // 初始化地块
     for (int i = 0; i < 9; i++) {
         blockname[i] = QString::fromUtf8(file.readLine()).chopped(2);
     }
@@ -33,12 +35,12 @@ void GameWindow::InitGameWindow() {
             block[i * 15 + j]->play();
         }
     }
-    // icon
+    // 加入icon
     tower1 = new myBlock(0, tr(":/image/recourse/tower/BloodMoonTower.gif"), this);
     tower1->setGeometry(1510, 10, 75, 93);
     tower1->setScaledContents(true);
     tower1->lower();
-    // monster
+    // 载入怪物序列
     std::string s = file.readLine().toStdString();
     int n = 0, i = 0;
     while (s[i] >= '0' && s[i] <= '9' && i < s.length()) {
@@ -56,22 +58,23 @@ void GameWindow::InitGameWindow() {
         QString ss = QString::fromUtf8(file.readLine()).chopped(2);
         monsterque.push_back(std::make_pair(x, ss));
     }
+    // 启动！
     on_pushButtonstart_clicked();
 }
 
-void GameWindow::on_pushButtonstart_clicked() {
+void GameWindow::on_pushButtonstart_clicked() { // 开始按钮
     Start();
     ui->pushButtonstart->setEnabled(false);
     ui->pushButtonpause->setEnabled(true);
 }
 
-void GameWindow::on_pushButtonpause_clicked() {
+void GameWindow::on_pushButtonpause_clicked() { // 暂停按钮
     Stop();
     ui->pushButtonstart->setEnabled(true);
     ui->pushButtonpause->setEnabled(false);
 }
 
-void GameWindow::Start() {
+void GameWindow::Start() { //所有单位开始运动
 	timer->start(20); 
     int n;
     n = block.size();
@@ -84,13 +87,12 @@ void GameWindow::Start() {
     }
     n = tower.size();
     for (int i = 0; i < n; i++) {
-        if (tower[i]->alive == false || tower[i]->beset == false) continue;
         tower[i]->play();
     }
     tower1->play();
 }
 
-void GameWindow::Stop() {
+void GameWindow::Stop() { //所有单位停止运动
 	timer->stop();
     int n;
     n = block.size();
@@ -103,28 +105,24 @@ void GameWindow::Stop() {
     }
     n = tower.size();
     for (int i = 0; i < n; i++) {
-        if (tower[i]->alive == false || tower[i]->beset == false) continue;
         tower[i]->stay();
     }
     tower1->stay();
 }
 
-void GameWindow::onTimer() {
+void GameWindow::onTimer() { //响应计时器
     time++;
-    RemoveDeath();
-    AddMonster();
-    AddTower();
     Act();
 }
 
-void GameWindow::AddMonster() {
+void GameWindow::AddMonster() { //根据载入的怪物序列按时间顺序生成怪物
     if (pos >= monsterque.size() || monsterque[pos].first != time) return;
     monster.push_back(new myMonster(pos, monsterque[pos].second, this));
     monster.back()->play();
     pos++;
 }
 
-void GameWindow::AddTower() {
+void GameWindow::AddTower() { //根据玩家的摆放操作将生成防御塔
     int n = towerque.size();
     for (int i = 0; i < n; i++) {
         myTower *p = towerque[i].second;
@@ -141,7 +139,7 @@ void GameWindow::AddTower() {
     towerque.clear();
 }
 
-void GameWindow::RemoveDeath() {
+void GameWindow::RemoveDeath() { //移除死亡单位
     int n;
     n = block.size();
     for (int i = 0; i < n; i++) {
@@ -165,7 +163,7 @@ void GameWindow::RemoveDeath() {
     }
 }
 
-void GameWindow::mousePressEvent(QMouseEvent *e) {
+void GameWindow::mousePressEvent(QMouseEvent *e) { //响应鼠标点击事件，根据点击的防御塔图标生成防御塔
     int x = e->x(), y = e->y();
     if (x >= 1510 && x <= 1585 && y >= 10 && y <= 103) {
         newtower = new myTower(x - 37, y - 46, tr("C:/YHY/work/vscode/demo/src/level/BloodMoonTower.txt"), this);
@@ -173,7 +171,7 @@ void GameWindow::mousePressEvent(QMouseEvent *e) {
     }
 }
 
-void GameWindow::mouseReleaseEvent(QMouseEvent *e) {
+void GameWindow::mouseReleaseEvent(QMouseEvent *e) { //响应鼠标释放事件，根据释放位置放置防御塔
     if (newtower == nullptr) return;
     int bx = e->x() / 100, by = e->y() / 100;
     if (bx < 0 || bx >= 15 || by < 0 || by >= 9 || newtower->pro.VAL > cost) {
@@ -186,12 +184,15 @@ void GameWindow::mouseReleaseEvent(QMouseEvent *e) {
     newtower = nullptr;
 }
 
-void GameWindow::mouseMoveEvent(QMouseEvent *e) {
+void GameWindow::mouseMoveEvent(QMouseEvent *e) { //响应鼠标移动事件，拖动生成的防御塔到目标位置
     if (newtower == nullptr) return;
     newtower->move(e->x() - 37, e->y() - 46);
 }
 
-void GameWindow::Act() {
+void GameWindow::Act() { //响应计时器的主逻辑，负责更新画面和单位，并调用所有单位的活动逻辑
+    RemoveDeath();
+    AddMonster();
+    AddTower();
     int n;
     n = block.size();
     for (int i = 0; i < n; i++) {
@@ -207,6 +208,6 @@ void GameWindow::Act() {
     }
 }
 
-GameWindow::~GameWindow() {
+GameWindow::~GameWindow() { //析构函数
     delete ui;
 }

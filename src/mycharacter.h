@@ -21,6 +21,7 @@ public:
     QMovie *movie, *movief;
     class myBlock *belong = nullptr;
     Property pro;
+    QVector<class myBlock*> atk;
     int cd = 0;
 
 public:

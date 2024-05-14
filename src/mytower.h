@@ -16,7 +16,6 @@ public:
     int type = 0;
     int cap = 0;
     std::vector<std::pair<int, int>> area;
-    QVector<class myBlock*> atk;
 
 public:
     explicit myTower(int xx, int yy, const QString &data, QWidget *parent);
