@@ -55,6 +55,20 @@ myTower::myTower(int xx, int yy, const QString &data, QWidget *parent): myCharac
 
 void myTower::act() {
     if (alive == false || beset == false) return;
+    if (belong == nullptr) {
+        int x = this->x() / 100, y = this->y() / 100;
+        belong = isin->block[y * 15 + x];
+        isin->block[y * 15 + x]->tower = this;
+    }
+    atk.clear();
+    int x = this->x() / 100, y = this->y() / 100;
+    int m = area.size();
+    for (int j = 0; j < m; j++) {
+        int dx = area[j].first, dy = area[j].second;
+        if (x + dx >= 0 && x + dx < 15 && y + dy >= 0 && y + dy < 9) {
+            atk.push_back(isin->block[(y + dy) * 15 + (x + dx)]);
+        }
+    }
     int n = atk.size(), mn = 0x7fffffff;
     myMonster *id = nullptr;
     for (int i = 0; i < n; i++) {

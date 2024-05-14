@@ -56,6 +56,10 @@ int myMonster::dis() {
 
 void myMonster::act() {
     if (alive == false || beset == false) return;
+    int bx = this->x() / 100, by = this->y() / 100;
+    if (belong != nullptr) belong->monster.remove(id);
+    belong = isin->block[by * 15 + bx];
+    isin->block[by * 15 + bx]->monster.insert(id, this);
     if (belong->tower != nullptr) {
         bebared = true;
     }

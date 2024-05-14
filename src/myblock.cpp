@@ -24,5 +24,5 @@ void myBlock::death() {
 }
 
 void myBlock::act() {
-    if (alive == false) return;
+    if (alive == false || beset == false) return;
 }

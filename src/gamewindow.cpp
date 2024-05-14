@@ -30,7 +30,7 @@ void GameWindow::InitGameWindow() {
             block[i * 15 + j]->setGeometry(j * 100, i * 100, 100, 100);
             block[i * 15 + j]->setScaledContents(true);
             block[i * 15 + j]->lower();
-            block[i * 15 + j]->beset = true;
+            block[i * 15 + j]->play();
         }
     }
     // icon
@@ -120,7 +120,6 @@ void GameWindow::onTimer() {
 void GameWindow::AddMonster() {
     if (pos >= monsterque.size() || monsterque[pos].first != time) return;
     monster.push_back(new myMonster(pos, monsterque[pos].second, this));
-    monster.back()->beset = true;
     monster.back()->play();
     pos++;
 }
@@ -136,7 +135,6 @@ void GameWindow::AddTower() {
         }
         cost -= p->pro.VAL;
         ui->labelcost->setText(QString::number(cost));
-        p->beset = true;
         p->play();
         tower.push_back(p);
     }
@@ -148,7 +146,6 @@ void GameWindow::RemoveDeath() {
     n = block.size();
     for (int i = 0; i < n; i++) {
         if (block[i]->alive == false && block[i]->beset == true) {
-            block[i]->beset = false;
             block[i]->death();
         }
     }
@@ -157,14 +154,12 @@ void GameWindow::RemoveDeath() {
         if (monster[i]->alive == false && monster[i]->beset == true) {
             cost += monster[i]->pro.VAL;
             ui->labelcost->setText(QString::number(cost));
-            monster[i]->beset = false;
             monster[i]->death();
         }
     }
     n = tower.size();
     for (int i = 0; i < n; i++) {
         if (tower[i]->alive == false && tower[i]->beset == true) {
-            tower[i]->beset = false;
             tower[i]->death();
         }
     }
@@ -200,35 +195,14 @@ void GameWindow::Act() {
     int n;
     n = block.size();
     for (int i = 0; i < n; i++) {
-        if (block[i]->alive == false || block[i]->beset == false) continue;
         block[i]->act();
     }
     n = monster.size();
     for (int i = 0; i < n; i++) {
-        if (monster[i]->alive == false || monster[i]->beset == false) continue;
-        int x = monster[i]->x() / 100, y = monster[i]->y() / 100;
-        if (monster[i]->belong != nullptr) monster[i]->belong->monster.remove(monster[i]->id);
-        monster[i]->belong = block[y * 15 + x];
-        block[y * 15 + x]->monster.insert(monster[i]->id, monster[i]);
         monster[i]->act();
     }
     n = tower.size();
     for (int i = 0; i < n; i++) {
-        if (tower[i]->alive == false || tower[i]->beset == false) continue;
-        if (tower[i]->belong == nullptr) {
-            int x = tower[i]->x() / 100, y = tower[i]->y() / 100;
-            tower[i]->belong = block[y * 15 + x];
-            block[y * 15 + x]->tower = tower[i];
-        }
-        tower[i]->atk.clear();
-        int x = tower[i]->x() / 100, y = tower[i]->y() / 100;
-        int m = tower[i]->area.size();
-        for (int j = 0; j < m; j++) {
-            int dx = tower[i]->area[j].first, dy = tower[i]->area[j].second;
-            if (x + dx >= 0 && x + dx < 15 && y + dy >= 0 && y + dy < 9) {
-                tower[i]->atk.push_back(block[(y + dy) * 15 + (x + dx)]);
-            }
-        }
         tower[i]->act();
     }
 }

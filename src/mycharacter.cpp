@@ -6,6 +6,7 @@ myCharacter::myCharacter(QWidget *parent): myObject(parent) {
 }
 
 void myCharacter::play() {
+    beset = true;
     movie->start();
     movief->start();
 }
@@ -16,6 +17,7 @@ void myCharacter::stay() {
 }
 
 void myCharacter::death() {
+    beset = false;
     movie->stop();
     movief->stop();
     if (belong != nullptr) belong->monster.remove(id);

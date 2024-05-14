@@ -61,6 +61,9 @@ private:
     void RemoveDeath();
     void AddMonster();
     void AddTower();
+
+    friend class myMonster;
+    friend class myTower;
 };
 
 #endif // GAMEWINDOW_H
