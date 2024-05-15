@@ -26,5 +26,9 @@
         <file>recourse/monster/archer.gif</file>
         <file>recourse/monster/archer-fliped.gif</file>
         <file>recourse/tower/BloodMoonTower.gif</file>
+        <file>recourse/spirit/Idle.gif</file>
+        <file>recourse/spirit/Idlef.gif</file>
+        <file>recourse/spirit/Attack.gif</file>
+        <file>recourse/spirit/Attackf.gif</file>
     </qresource>
 </RCC>

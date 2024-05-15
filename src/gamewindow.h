@@ -45,6 +45,7 @@ private:
 
     class myTower *newtower = nullptr;
     class myBlock *tower1 = nullptr;
+    class myBlock *tower2 = nullptr;
 
     QString blockname[9];
 

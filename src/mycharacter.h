@@ -17,8 +17,10 @@ class myCharacter: public myObject {
 
 public:
     int id;
+    int dir;
     QString name;
-    QMovie *movie, *movief;
+    QMovie *nowm;
+    QMovie *norm, *normf, *attk, *attkf, *dead, *deadf;
     class myBlock *belong = nullptr;
     Property pro;
     QVector<class myBlock*> atk;
@@ -29,10 +31,12 @@ public:
     void play();
     void stay();
     void death();
+    void setnowm(QMovie *m);
     void getpro(std::string s);
-    void flip(int d);
     void hit(myCharacter *target);
     void behit(int damage, int type);
+    int X();
+    int Y();
 };
 
 #endif // MYCHARACTER_H

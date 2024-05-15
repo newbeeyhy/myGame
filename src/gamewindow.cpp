@@ -37,9 +37,13 @@ void GameWindow::InitGameWindow() { //初始化窗口
     }
     // 加入icon
     tower1 = new myBlock(0, tr(":/image/recourse/tower/BloodMoonTower.gif"), this);
-    tower1->setGeometry(1510, 10, 75, 93);
+    tower1->setGeometry(1513, 10, 75, 93);
     tower1->setScaledContents(true);
     tower1->lower();
+    tower2 = new myBlock(0, tr(":/image/recourse/spirit/Idle.gif"), this);
+    tower2->setGeometry(1450, 70, 200, 200);
+    tower2->setScaledContents(true);
+    tower2->lower();
     // 载入怪物序列
     std::string s = file.readLine().toStdString();
     int n = 0, i = 0;
@@ -90,6 +94,7 @@ void GameWindow::Start() { //所有单位开始运动
         tower[i]->play();
     }
     tower1->play();
+    tower2->play();
 }
 
 void GameWindow::Stop() { //所有单位停止运动
@@ -165,8 +170,12 @@ void GameWindow::RemoveDeath() { //移除死亡单位
 
 void GameWindow::mousePressEvent(QMouseEvent *e) { //响应鼠标点击事件，根据点击的防御塔图标生成防御塔
     int x = e->x(), y = e->y();
-    if (x >= 1510 && x <= 1585 && y >= 10 && y <= 103) {
+    if (x >= 1500 && x <= 1600 && y >= 10 && y < 110) {
         newtower = new myTower(x - 37, y - 46, tr("C:/YHY/work/vscode/demo/src/level/BloodMoonTower.txt"), this);
+        newtower->play();
+    }
+    if (x >= 1500 && x <= 1600 && y >= 110 && y < 210) {
+        newtower = new myTower(x - 100, y - 100, tr("C:/YHY/work/vscode/demo/src/level/Spirit.txt"), this);
         newtower->play();
     }
 }
@@ -180,13 +189,13 @@ void GameWindow::mouseReleaseEvent(QMouseEvent *e) { //响应鼠标释放事件�
         return;
     }
     towerque.push_back(std::make_pair(std::make_pair(bx, by), newtower));
-    newtower->move(bx * 100 + 12, by * 100 + 3);
+    newtower->move(bx * 100 + (100 - newtower->width()) / 2, by * 100 + (100 - newtower->height()) / 2);
     newtower = nullptr;
 }
 
 void GameWindow::mouseMoveEvent(QMouseEvent *e) { //响应鼠标移动事件，拖动生成的防御塔到目标位置
     if (newtower == nullptr) return;
-    newtower->move(e->x() - 37, e->y() - 46);
+    newtower->move(e->x() - newtower->width() / 2, e->y() - newtower->height() / 2);
 }
 
 void GameWindow::Act() { //响应计时器的主逻辑，负责更新画面和单位，并调用所有单位的活动逻辑

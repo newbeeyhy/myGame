@@ -8,20 +8,17 @@ myCharacter::myCharacter(QWidget *parent): myObject(parent) { //构造函数
 void myCharacter::play() { //单位开始运行
     if (alive == false) return;
     beset = true;
-    movie->start();
-    movief->start();
+    nowm->start();
 }
 
 void myCharacter::stay() { //单位暂停运行
     if (alive == false) return;
-    movie->stop();
-    movief->stop();
+    nowm->stop();
 }
 
 void myCharacter::death() { //单位死亡
     beset = false;
-    movie->stop();
-    movief->stop();
+    nowm->stop();
     if (belong != nullptr) belong->monster.remove(id);
     this->clear();
 }
@@ -38,11 +35,6 @@ void myCharacter::getpro(std::string s) { //读取单位数值
         a[j] = x;
     }
     pro = Property(a[0], a[1], a[2] ,a[3], a[4], a[5], a[6], a[7], a[8], a[9], a[10]);
-}
-
-void myCharacter::flip(int d) { //方向翻转
-    if (d == 1) this->setMovie(movie);
-    if (d == -1) this->setMovie(movief);
 }
 
 void myCharacter::hit(myCharacter *target) { //攻击目标
@@ -64,4 +56,19 @@ void myCharacter::behit(int damage, int type) { //受击
         pro.HP -= damage * (1.0 - (double)pro.MDEF / 100);
     }
     if (pro.HP <= 0) alive = false;
+}
+
+void myCharacter::setnowm(QMovie *m) {
+    if (m == nullptr || nowm == m) return;
+    nowm = m;
+    nowm->start();
+    this->setMovie(nowm);
+}
+
+int myCharacter::X() {
+    return this->x() + this->width() / 2;
+}
+
+int myCharacter::Y() {
+    return this->y() + this->height() / 2;
 }

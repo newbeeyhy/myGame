@@ -10,9 +10,9 @@ myMonster::myMonster(int id_, const QString &data, QWidget *parent): myCharacter
     file.open(QFile::ReadOnly);
     //载入图像资源
     name = QString::fromUtf8(file.readLine()).chopped(2);
-    movie = new QMovie(QString::fromUtf8(file.readLine()).chopped(2));
-    movief = new QMovie(QString::fromUtf8(file.readLine()).chopped(2));
-    this->setMovie(movie);
+    norm = new QMovie(QString::fromUtf8(file.readLine()).chopped(2));
+    normf = new QMovie(QString::fromUtf8(file.readLine()).chopped(2));
+    this->setnowm(norm);
     //读取怪物数值
     std::string s = file.readLine().toStdString();
     getpro(s);
@@ -50,7 +50,7 @@ myMonster::myMonster(int id_, const QString &data, QWidget *parent): myCharacter
 }
 
 int myMonster::dis() { //计算到终点的距离
-    int res = 0, x = this->x(), y = this->y(), n = path.size();
+    int res = 0, x = this->X(), y = this->Y(), n = path.size();
     for (int i = pos; i < n; i++) {
         res += abs(path[i].first - x) + abs(path[i].second - y);
         x = path[i].first;
@@ -62,13 +62,16 @@ int myMonster::dis() { //计算到终点的距离
 void myMonster::act() { //怪物行动逻辑
     if (alive == false || beset == false) return;
     //更新所在地块
-    int bx = this->x() / 100, by = this->y() / 100;
+    int bx = this->X() / 100, by = this->Y() / 100;
     if (belong != nullptr) belong->monster.remove(id);
     belong = isin->block[by * 15 + bx];
     isin->block[by * 15 + bx]->monster.insert(id, this);
     //检测阻挡
     if (belong->tower != nullptr) {
-        bebared = true;
+        if (bebared == false && belong->tower->pro.WEI - belong->tower->cap >= this->pro.WEI) {
+            bebared = true;
+            belong->tower->bar(this);
+        }
     }
     else {
         bebared = false;
@@ -76,19 +79,32 @@ void myMonster::act() { //怪物行动逻辑
     //沿着路径运动
     if (bebared == false) {
         if (pos >= path.size()) return;
-        int x = this->x(), y = this->y();
+        int x = this->X(), y = this->Y();
         if (abs(x - path[pos].first) < pro.SPD && abs(y - path[pos].second) < pro.SPD) {
             move(path[pos].first, path[pos].second);
             x = path[pos].first; y = path[pos].second;
             pos++;
         }
         int dx = (path[pos].first - x) / std::max(1, abs(path[pos].first - x)), dy = (path[pos].second - y) / std::max(1, abs(path[pos].second - y));
-        flip(dx);
-        move(x + dx * pro.SPD, y + dy * pro.SPD);
+        if (dir != dx) {
+            if (dir == 1) this->setnowm(norm);
+            if (dir == -1) this->setnowm(normf);
+        }
+        dir = dx;
+        move(x - this->width() / 2 + dx * pro.SPD, y - this->height() / 2 + dy * pro.SPD);
     }
     //选取单位进行攻击
     if (belong->tower != nullptr) {
+        // if (dir == 1) this->setnowm(attk);
+        // if (dir == -1) this->setnowm(attkf);
         hit(belong->tower);
+        if (belong->tower->alive == false) {
+            belong->tower = nullptr;
+        }
     }
-    else cd = 0;
+    else {
+        if (dir == 1) this->setnowm(norm);
+        if (dir == -1) this->setnowm(normf);
+        cd = 0;
+    }
 }
