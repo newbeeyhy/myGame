@@ -18,7 +18,7 @@ class GameWindow: public QWidget {
     Q_OBJECT
     
 public:
-    explicit GameWindow(QWidget *parent = nullptr);
+    explicit GameWindow(int level, QWidget *parent = nullptr);
     ~GameWindow();
 
 public slots:
@@ -38,7 +38,7 @@ private:
 
     Ui::GameWindow *ui;
 
-    void InitGameWindow();
+    void InitGameWindow(int level);
 
     QTimer *timer = nullptr;
     int time = 0;

@@ -5,19 +5,19 @@
 #include "mytower.h"
 #include "myblock.h"
 
-GameWindow::GameWindow(QWidget *parent): QWidget(parent), ui(new Ui::GameWindow) { //构造函数
+GameWindow::GameWindow(int level, QWidget *parent): QWidget(parent), ui(new Ui::GameWindow) { //构造函数
     ui->setupUi(this);
-    InitGameWindow();
+    InitGameWindow(level);
 }
 
-void GameWindow::InitGameWindow() { //初始化窗口
+void GameWindow::InitGameWindow(int level) { //初始化窗口
     // 初始化计时器
     timer = new QTimer(this);
     ui->labelcost->setText(QString::number(cost));
     connect(timer, QTimer::timeout, this, GameWindow::onTimer);
     // 加载关卡文件
-    this->setWindowTitle(QString("LEVEL") + QString("1"));
-    QFile file(QString("C:/YHY/work/vscode/demo/src/level/") + QString("1") + QString("/map.txt"));
+    this->setWindowTitle(QString("LEVEL") + QString::number(level));
+    QFile file(QString("C:/YHY/work/vscode/demo/src/level/") + QString::number(level) + QString("/map.txt"));
     file.open(QFile::ReadOnly);
     // 初始化地块
     for (int i = 0; i < 9; i++) {

@@ -44,7 +44,8 @@ SOURCES += \
     mymonster.cpp \
     myobject.cpp \
     myproperty.cpp \
-    startmenu.cpp
+    startmenu.cpp \
+    levelselectmenu.cpp
 
 HEADERS += \
         startmenu.h \
@@ -63,7 +64,8 @@ HEADERS += \
     mymonster.h \
     myobject.h \
     myproperty.h \
-    startmenu.h
+    startmenu.h \
+    levelselectmenu.h
 
 FORMS += \
         startmenu.ui \
@@ -71,7 +73,8 @@ FORMS += \
     gamewindow.ui \
     startmenu.ui \
     gamewindow.ui \
-    startmenu.ui
+    startmenu.ui \
+    levelselectmenu.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
