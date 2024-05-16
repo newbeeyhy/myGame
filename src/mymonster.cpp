@@ -12,6 +12,8 @@ myMonster::myMonster(int id_, const QString &data, QWidget *parent): myCharacter
     name = QString::fromUtf8(file.readLine()).chopped(2);
     norm = new QMovie(QString::fromUtf8(file.readLine()).chopped(2));
     normf = new QMovie(QString::fromUtf8(file.readLine()).chopped(2));
+    attk = new QMovie(QString::fromUtf8(file.readLine()).chopped(2));
+    attkf = new QMovie(QString::fromUtf8(file.readLine()).chopped(2));
     this->setnowm(norm);
     //读取怪物数值
     std::string s = file.readLine().toStdString();
@@ -95,8 +97,8 @@ void myMonster::act() { //怪物行动逻辑
     }
     //选取单位进行攻击
     if (belong->tower != nullptr) {
-        // if (dir == 1) this->setnowm(attk);
-        // if (dir == -1) this->setnowm(attkf);
+        if (dir == 1) this->setnowm(attk);
+        if (dir == -1) this->setnowm(attkf);
         hit(belong->tower);
         if (belong->tower->alive == false) {
             belong->tower = nullptr;

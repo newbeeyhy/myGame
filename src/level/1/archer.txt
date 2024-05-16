@@ -1,6 +1,8 @@
 archer
 :/image/recourse/monster/archer.gif
 :/image/recourse/monster/archer-fliped.gif
-200 200 0 20 0 10 0 2 25 50 1
+:/image/recourse/monster/archerattk.gif
+:/image/recourse/monster/archerattkf.gif
+300 300 0 20 0 10 0 2 25 50 1
 0 0 100 100
 1450 50 1450 250 50 250 50 450 1450 450 1450 650 50 650 50 850 1450 850;
