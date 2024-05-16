@@ -4,5 +4,5 @@ bat
 :/image/recourse/monster/bat-x4.gif
 :/image/recourse/monster/bat-x4-fliped.gif
 200 200 0 20 0 10 0 3 25 50 1
-30 30 40 40
-14 0 14 2 0 2 0 4 14 4 14 6 0 6 0 8 14 8;
+30 230 40 40
+11 2 11 4 14 4;

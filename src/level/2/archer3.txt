@@ -4,5 +4,5 @@ archer
 :/image/recourse/monster/archerattk.gif
 :/image/recourse/monster/archerattkf.gif
 300 300 0 20 0 10 0 2 25 50 1
-0 0 100 100
-14 0 14 2 0 2 0 4 14 4 14 6 0 6 0 8 14 8;
+0 400 100 100
+14 4;

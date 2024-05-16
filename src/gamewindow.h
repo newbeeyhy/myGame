@@ -34,7 +34,7 @@ protected:
     void mouseMoveEvent(QMouseEvent *e);
 
 private:
-    int cost = 100;
+    int cost = 0;
 
     Ui::GameWindow *ui;
 

@@ -44,7 +44,7 @@ myMonster::myMonster(int id_, const QString &data, QWidget *parent): myCharacter
         }
         a[j % 2] = x;
         if (j % 2 == 1) {
-            path.push_back(std::make_pair(a[0], a[1]));
+            path.push_back(std::make_pair(a[0] * 100 + 50, a[1] * 100 + 50));
         }
         if (s[i] == ';' || i >= n) break;
         i++;

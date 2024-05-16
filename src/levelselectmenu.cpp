@@ -14,3 +14,8 @@ void LevelSelectMenu::on_pushButton1_clicked() {
     *level = 1;
     this->accept();
 }
+
+void LevelSelectMenu::on_pushButton2_clicked() {
+    *level = 2;
+    this->accept();
+}

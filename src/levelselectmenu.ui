@@ -26,6 +26,19 @@
     <string>LEVEL1</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="pushButton2">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>130</y>
+     <width>111</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>LEVEL2</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

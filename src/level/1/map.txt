@@ -16,6 +16,7 @@
 722222222222223
 455555555555555
 122222222222222
+100
 6
 50
 C:/YHY/work/vscode/demo/src/level/1/archer.txt

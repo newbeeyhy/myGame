@@ -13,7 +13,6 @@ GameWindow::GameWindow(int level, QWidget *parent): QWidget(parent), ui(new Ui::
 void GameWindow::InitGameWindow(int level) { //初始化窗口
     // 初始化计时器
     timer = new QTimer(this);
-    ui->labelcost->setText(QString::number(cost));
     connect(timer, QTimer::timeout, this, GameWindow::onTimer);
     // 加载关卡文件
     this->setWindowTitle(QString("LEVEL") + QString::number(level));
@@ -44,9 +43,18 @@ void GameWindow::InitGameWindow(int level) { //初始化窗口
     tower2->setGeometry(1450, 70, 200, 200);
     tower2->setScaledContents(true);
     tower2->lower();
-    // 载入怪物序列
+    // 读入初始费用
     std::string s = file.readLine().toStdString();
-    int n = 0, i = 0;
+    int i = 0;
+    while (s[i] >= '0' && s[i] <= '9' && i < s.length()) {
+        cost = cost * 10 + s[i] - '0';
+        i++;
+    }
+    ui->labelcost->setText(QString::number(cost));
+    // 载入怪物序列
+    s = file.readLine().toStdString();
+    int n = 0;
+    i = 0;
     while (s[i] >= '0' && s[i] <= '9' && i < s.length()) {
         n = n * 10 + s[i] - '0';
         i++;
@@ -121,10 +129,11 @@ void GameWindow::onTimer() { //响应计时器
 }
 
 void GameWindow::AddMonster() { //根据载入的怪物序列按时间顺序生成怪物
-    if (pos >= monsterque.size() || monsterque[pos].first != time) return;
-    monster.push_back(new myMonster(pos, monsterque[pos].second, this));
-    monster.back()->play();
-    pos++;
+    while(pos < monsterque.size() && monsterque[pos].first == time) {
+        monster.push_back(new myMonster(pos, monsterque[pos].second, this));
+        monster.back()->play();
+        pos++;
+    }
 }
 
 void GameWindow::AddTower() { //根据玩家的摆放操作将生成防御塔
