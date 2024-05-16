@@ -96,7 +96,7 @@ void myMonster::act() { //怪物行动逻辑
         move(x - this->width() / 2 + dx * pro.SPD, y - this->height() / 2 + dy * pro.SPD);
     }
     //选取单位进行攻击
-    if (belong->tower != nullptr) {
+    if (belong->tower != nullptr && bebared == true) {
         if (dir == 1) this->setnowm(attk);
         if (dir == -1) this->setnowm(attkf);
         hit(belong->tower);
