@@ -92,13 +92,14 @@ void myMonster::act() { //怪物行动逻辑
             if (dir == 1) this->setnowm(norm);
             if (dir == -1) this->setnowm(normf);
         }
-        dir = dx;
+        if (dx != 0) dir = dx;
         move(x - this->width() / 2 + dx * pro.SPD, y - this->height() / 2 + dy * pro.SPD);
     }
     //选取单位进行攻击
     if (belong->tower != nullptr && bebared == true) {
         if (dir == 1) this->setnowm(attk);
         if (dir == -1) this->setnowm(attkf);
+        // qDebug() << belong->tower->pro.HP;
         hit(belong->tower);
         if (belong->tower->alive == false) {
             belong->tower = nullptr;
