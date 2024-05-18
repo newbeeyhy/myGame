@@ -3,8 +3,11 @@
 ## 类的继承和派生关系
 
 ```
-QWidget
+QDialog
 ├─ StartMenu
+└─ LevelSelectMenu
+
+QWidget
 └─ GameWindow
 
 QLabel
@@ -17,7 +20,9 @@ QLabel
 myProperty
 ```
 
-- 窗口类 **StartMenu** 和 **GameWindow** 继承 **QWidget** 类。
+- 对话框类 **StartMenu** 和 **LevelSelectMenu** 继承 **QDialog** 类。
+
+- 游戏窗口类 **GameWindow** 继承 **QWidget** 类。
 
 - 实体类 **myObject** 继承 **QLabel** 类，含有虚函数 **act()** 用于派生类重载，**act()** 是实体活动的主要逻辑。
 
