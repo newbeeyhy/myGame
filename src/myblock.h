@@ -26,6 +26,7 @@ public:
     void stay();
     void death();
     void act();
+    ~myBlock();
 };
 
 #endif // MYBLOCK_H

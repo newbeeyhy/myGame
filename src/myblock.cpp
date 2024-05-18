@@ -26,3 +26,7 @@ void myBlock::death() { //单位死亡
 void myBlock::act() { //地块活动逻辑
     if (alive == false || beset == false) return;
 }
+
+myBlock::~myBlock() { //析构函数
+    if (movie != nullptr) delete movie;
+}

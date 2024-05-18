@@ -1,4 +1,5 @@
 #include <QMessageBox>
+#include <QMovie>
 #include "ui_gamewindow.h"
 #include "mycharacter.h"
 #include "gamewindow.h"
@@ -36,12 +37,14 @@ void GameWindow::InitGameWindow(int level) { //初始化窗口
         }
     }
     // 加入icon
-    tower1 = new myBlock(0, tr(":/image/recourse/tower/BloodMoonTower.gif"), this);
-    tower1->setGeometry(1513, 10, 75, 93);
+    tower1 = new QLabel(this);
+    tower1->setMovie(new QMovie(tr(":/image/recourse/tower/BloodMoonTower.gif")));
+    tower1->setGeometry(1513, 20, 75, 93);
     tower1->setScaledContents(true);
     tower1->lower();
-    tower2 = new myBlock(0, tr(":/image/recourse/spirit/Idle.gif"), this);
-    tower2->setGeometry(1450, 70, 200, 200);
+    tower2 = new QLabel(this);
+    tower2->setMovie(new QMovie(tr(":/image/recourse/spirit/Idle.gif")));
+    tower2->setGeometry(1450, 80, 200, 200);
     tower2->setScaledContents(true);
     tower2->lower();
     // 读入初始费用
@@ -72,6 +75,35 @@ void GameWindow::InitGameWindow(int level) { //初始化窗口
         QString ss = QString::fromUtf8(file.readLine()).chopped(2);
         monsterque.push_back(std::make_pair(x, ss));
     }
+    // 设置buff图标
+    ui->bingdong->setPixmap(QPixmap(tr(":/image/recourse/buff/bingdong.png")));
+    ui->bingdong->setScaledContents(true);
+    ui->bingdong->show();
+    ui->bingdongn->setText("X " + QString::number(bd));
+    ui->fangxie->setPixmap(QPixmap(tr(":/image/recourse/buff/fangxie.png")));
+    ui->fangxie->setScaledContents(true);
+    ui->fangxie->show();
+    ui->fangxien->setText("X " + QString::number(fx));
+    ui->jiyun->setPixmap(QPixmap(tr(":/image/recourse/buff/jiyun.png")));
+    ui->jiyun->setScaledContents(true);
+    ui->jiyun->show();
+    ui->jiyunn->setText("X " + QString::number(jy));
+    ui->kuaigong->setPixmap(QPixmap(tr(":/image/recourse/buff/kuaigong.png")));
+    ui->kuaigong->setScaledContents(true);
+    ui->kuaigong->show();
+    ui->kuaigongn->setText("X " + QString::number(kg));
+    ui->kuangbao->setPixmap(QPixmap(tr(":/image/recourse/buff/kuangbao.png")));
+    ui->kuangbao->setScaledContents(true);
+    ui->kuangbao->show();
+    ui->kuangbaon->setText("X " + QString::number(kb));
+    ui->qungong->setPixmap(QPixmap(tr(":/image/recourse/buff/qungong.png")));
+    ui->qungong->setScaledContents(true);
+    ui->qungong->show();
+    ui->qungongn->setText("X " + QString::number(qg));
+    ui->yingyan->setPixmap(QPixmap(tr(":/image/recourse/buff/yingyan.png")));
+    ui->yingyan->setScaledContents(true);
+    ui->yingyan->show();
+    ui->yingyann->setText("X " + QString::number(yy));
     // 启动！
     on_pushButtonstart_clicked();
 }
@@ -103,8 +135,8 @@ void GameWindow::Start() { //所有单位开始运动
     for (int i = 0; i < n; i++) {
         tower[i]->play();
     }
-    tower1->play();
-    tower2->play();
+    tower1->movie()->start();
+    tower2->movie()->start();
 }
 
 void GameWindow::Stop() { //所有单位停止运动
@@ -122,7 +154,8 @@ void GameWindow::Stop() { //所有单位停止运动
     for (int i = 0; i < n; i++) {
         tower[i]->stay();
     }
-    tower1->stay();
+    tower1->movie()->stop();
+    tower2->movie()->stop();
 }
 
 void GameWindow::onTimer() { //响应计时器
@@ -202,11 +235,11 @@ void GameWindow::Check() { //检测和更新游戏状态
 
 void GameWindow::mousePressEvent(QMouseEvent *e) { //响应鼠标点击事件，根据点击的防御塔图标生成防御塔
     int x = e->x(), y = e->y();
-    if (x >= 1500 && x <= 1600 && y >= 10 && y < 110) {
+    if (x >= 1500 && x <= 1600 && y >= 20 && y < 120) {
         newtower = new myTower(x - 37, y - 46, tr("C:/YHY/work/vscode/demo/src/level/BloodMoonTower.txt"), this);
         newtower->play();
     }
-    if (x >= 1500 && x <= 1600 && y >= 110 && y < 210) {
+    if (x >= 1500 && x <= 1600 && y >= 120 && y < 220) {
         newtower = new myTower(x - 100, y - 100, tr("C:/YHY/work/vscode/demo/src/level/Spirit.txt"), this);
         newtower->play();
     }

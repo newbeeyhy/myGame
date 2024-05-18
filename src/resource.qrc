@@ -35,5 +35,12 @@
         <file>recourse/spirit/Idlef.gif</file>
         <file>recourse/spirit/Attack.gif</file>
         <file>recourse/spirit/Attackf.gif</file>
+        <file>recourse/buff/bingdong.png</file>
+        <file>recourse/buff/fangxie.png</file>
+        <file>recourse/buff/jiyun.png</file>
+        <file>recourse/buff/kuaigong.png</file>
+        <file>recourse/buff/kuangbao.png</file>
+        <file>recourse/buff/qungong.png</file>
+        <file>recourse/buff/yingyan.png</file>
     </qresource>
 </RCC>

@@ -36,6 +36,7 @@ protected:
 private:
     int cost = 0;
     int hp = 5;
+    int bd = 0, fx = 0, jy = 0, kg = 0, kb = 0, qg = 0, yy = 0;
 
     Ui::GameWindow *ui;
 
@@ -45,8 +46,8 @@ private:
     int time = 0;
 
     class myTower *newtower = nullptr;
-    class myBlock *tower1 = nullptr;
-    class myBlock *tower2 = nullptr;
+    class QLabel *tower1 = nullptr;
+    class QLabel *tower2 = nullptr;
 
     QString blockname[9];
 

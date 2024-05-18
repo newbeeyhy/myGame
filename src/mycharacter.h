@@ -19,8 +19,8 @@ public:
     int id;
     int dir;
     QString name;
-    QMovie *nowm;
-    QMovie *norm, *normf, *attk, *attkf, *dead, *deadf;
+    QMovie *nowm = nullptr;
+    QMovie *norm = nullptr, *normf = nullptr, *attk = nullptr, *attkf = nullptr, *dead = nullptr, *deadf = nullptr;
     class myBlock *belong = nullptr;
     Property pro;
     QVector<class myBlock*> atk;

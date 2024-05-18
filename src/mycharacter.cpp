@@ -58,17 +58,17 @@ void myCharacter::behit(int damage, int type) { //受击
     if (pro.HP <= 0) alive = false;
 }
 
-void myCharacter::setnowm(QMovie *m) {
+void myCharacter::setnowm(QMovie *m) { //设置播放动画
     if (m == nullptr || nowm == m) return;
     nowm = m;
     nowm->start();
     this->setMovie(nowm);
 }
 
-int myCharacter::X() {
+int myCharacter::X() { //获取x坐标
     return this->x() + this->width() / 2;
 }
 
-int myCharacter::Y() {
+int myCharacter::Y() { //获取y坐标
     return this->y() + this->height() / 2;
 }
