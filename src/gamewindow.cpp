@@ -1,3 +1,4 @@
+#include <QMessageBox>
 #include "ui_gamewindow.h"
 #include "mycharacter.h"
 #include "gamewindow.h"
@@ -50,7 +51,8 @@ void GameWindow::InitGameWindow(int level) { //初始化窗口
         cost = cost * 10 + s[i] - '0';
         i++;
     }
-    ui->labelcost->setText(QString::number(cost));
+    ui->labelcostnum->setText(QString::number(cost));
+    ui->labelhpnum->setText(QString::number(hp));
     // 载入怪物序列
     s = file.readLine().toStdString();
     int n = 0;
@@ -146,7 +148,7 @@ void GameWindow::AddTower() { //根据玩家的摆放操作将生成防御塔
             continue;
         }
         cost -= p->pro.VAL;
-        ui->labelcost->setText(QString::number(cost));
+        ui->labelcostnum->setText(QString::number(cost));
         p->play();
         tower.push_back(p);
     }
@@ -165,7 +167,7 @@ void GameWindow::RemoveDeath() { //移除死亡单位
     for (int i = 0; i < n; i++) {
         if (monster[i]->alive == false && monster[i]->beset == true) {
             cost += monster[i]->pro.VAL;
-            ui->labelcost->setText(QString::number(cost));
+            ui->labelcostnum->setText(QString::number(cost));
             monster[i]->death();
         }
     }
@@ -174,6 +176,27 @@ void GameWindow::RemoveDeath() { //移除死亡单位
         if (tower[i]->alive == false && tower[i]->beset == true) {
             tower[i]->death();
         }
+    }
+}
+
+
+void GameWindow::Check() { //检测和更新游戏状态
+    int n = monster.size();
+    for (int i = 0; i < n; i++) {
+        if (monster[i]->alive == false || monster[i]->beset == false) continue;
+        if (monster[i]->pos == monster[i]->path.size()) {
+            hp--;
+            ui->labelhpnum->setText(QString::number(hp));
+            monster[i]->alive = false;
+            monster[i]->death();
+        }
+    }
+    if (hp == 0) {
+        Stop();
+        ui->pushButtonstart->setEnabled(false);
+        ui->pushButtonpause->setEnabled(false);
+        QMessageBox::information(this, tr("Game Over"), tr("You Lose!"));
+        this->close();
     }
 }
 
@@ -208,6 +231,7 @@ void GameWindow::mouseMoveEvent(QMouseEvent *e) { //响应鼠标移动事件，�
 }
 
 void GameWindow::Act() { //响应计时器的主逻辑，负责更新画面和单位，并调用所有单位的活动逻辑
+    Check();
     RemoveDeath();
     AddMonster();
     AddTower();

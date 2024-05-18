@@ -23,6 +23,7 @@ public:
     explicit myMonster(int id_, const QString &data, QWidget *parent);
     int dis();
     void act();
+    friend class GameWindow;
 };
 
 #endif // MYMONSTER_H

@@ -35,6 +35,7 @@ protected:
 
 private:
     int cost = 0;
+    int hp = 5;
 
     Ui::GameWindow *ui;
 
@@ -62,6 +63,7 @@ private:
     void RemoveDeath();
     void AddMonster();
     void AddTower();
+    void Check();
 
     friend class myMonster;
     friend class myTower;
