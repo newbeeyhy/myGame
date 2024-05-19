@@ -1,7 +1,7 @@
 #ifndef LEVELSELECTMENU_H
 #define LEVELSELECTMENU_H
 
-#include <Qdialog>
+#include <QDialog>
 
 namespace Ui {
 class LevelSelectMenu;
