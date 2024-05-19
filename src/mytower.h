@@ -23,6 +23,7 @@ public:
     explicit myTower(int xx, int yy, const QString &data, QWidget *parent);
     void bar(myMonster *p);
     void act();
+    int dis(int x, int y);
 };
 
 #endif // MYTOWER_H

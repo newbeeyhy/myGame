@@ -15,9 +15,11 @@ class myMonster: public myCharacter {
 private:
     int pos = 0;
     std::vector<std::pair<int, int>> path;
+    std::vector<std::pair<int, int>> area;
 
 public:
     bool bebared = false;
+    int lop = 0;
 
 public:
     explicit myMonster(int id_, const QString &data, QWidget *parent);

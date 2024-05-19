@@ -1,11 +1,11 @@
-#include <QMessageBox>
-#include <QMovie>
 #include "ui_gamewindow.h"
 #include "mycharacter.h"
 #include "gamewindow.h"
 #include "mymonster.h"
 #include "mytower.h"
 #include "myblock.h"
+#include <QMessageBox>
+#include <QMovie>
 
 GameWindow::GameWindow(int level, QWidget *parent): QWidget(parent), ui(new Ui::GameWindow) { //构造函数
     ui->setupUi(this);
@@ -201,12 +201,14 @@ void GameWindow::RemoveDeath() { //移除死亡单位
         if (monster[i]->alive == false && monster[i]->beset == true) {
             cost += monster[i]->pro.VAL;
             ui->labelcostnum->setText(QString::number(cost));
+            monster[i]->belong->monster.remove(monster[i]->id);
             monster[i]->death();
         }
     }
     n = tower.size();
     for (int i = 0; i < n; i++) {
         if (tower[i]->alive == false && tower[i]->beset == true) {
+            tower[i]->belong->tower = nullptr;
             tower[i]->death();
         }
     }

@@ -65,6 +65,10 @@ void myTower::bar(myMonster *p) {
     bared.push_back(p);
 }
 
+int myTower::dis(int x, int y) {
+    return abs(x - this->X()) * (x - this->X()) + (y - this->Y()) * (y - this->Y());
+}
+
 void myTower::act() { //防御塔活动逻辑
     if (alive == false || beset == false) return;
     this->raise();
@@ -75,11 +79,9 @@ void myTower::act() { //防御塔活动逻辑
         isin->block[y * 15 + x]->tower = this;
     }
     //优先攻击阻挡单位
-    myMonster *id = nullptr;
+    myMonster *itk = nullptr;
     if (!bared.empty()) {
-        id = bared.front();
-        if (id->X() - this->X() < 0) dir = -1;
-        if (id->X() - this->X() > 0) dir = 1;
+        itk = bared.front();
     }
     else {
         //检测攻击范围内的单位
@@ -100,22 +102,23 @@ void myTower::act() { //防御塔活动逻辑
             for (; it != u->monster.constEnd(); it++) {
                 if ((*it)->dis() < mn) {
                     mn = (*it)->dis();
-                    id = *it;
+                    itk = *it;
                 }
             }
         }
     }
-    if (id != nullptr) {
+    if (itk != nullptr) {
+        if (itk->X() - this->X() < 0) dir = -1;
+        if (itk->X() - this->X() > 0) dir = 1;
         if (dir == 1) this->setnowm(attk);
         if (dir == -1) this->setnowm(attkf);
-        hit(id);
+        hit(itk);
         if (!bared.empty()) {
             if (bared.front()->alive == false) {
                 cap -= bared.front()->pro.WEI;
                 bared.pop_front();
             }
         }
-        // qDebug() << (id)->pro.HP;
     }
     else {
         if (dir == 1) this->setnowm(norm);

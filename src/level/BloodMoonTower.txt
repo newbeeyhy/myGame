@@ -3,7 +3,7 @@ BloodMoonTower
 :/image/recourse/tower/BloodMoonTower.gif
 :/image/recourse/tower/BloodMoonTower.gif
 :/image/recourse/tower/BloodMoonTower.gif
-100 100 0 35 0 10 0 0 25 100 0
+300 300 0 35 0 10 0 0 25 100 0
 1
 75 93
 -1 -1 0 -1 1 -1 -1 0 0 0 1 0 -1 1 0 1 1 1;
