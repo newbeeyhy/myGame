@@ -43,4 +43,26 @@
         <file>recourse/buff/qungong.png</file>
         <file>recourse/buff/yingyan.png</file>
     </qresource>
+    <qresource prefix="/sound">
+        <file>recourse/BGM/GameWindow.mp3</file>
+        <file>recourse/BGM/StartMenu.mp3</file>
+    </qresource>
+    <qresource prefix="/data">
+        <file>level/BloodMoonTower.txt</file>
+        <file>level/Spirit.txt</file>
+        <file>level/1/archer.txt</file>
+        <file>level/1/bat.txt</file>
+        <file>level/1/map.txt</file>
+        <file>level/2/archer1.txt</file>
+        <file>level/2/archer2.txt</file>
+        <file>level/2/archer3.txt</file>
+        <file>level/2/archer4.txt</file>
+        <file>level/2/archer5.txt</file>
+        <file>level/2/bat1.txt</file>
+        <file>level/2/bat2.txt</file>
+        <file>level/2/bat3.txt</file>
+        <file>level/2/bat4.txt</file>
+        <file>level/2/bat5.txt</file>
+        <file>level/2/map.txt</file>
+    </qresource>
 </RCC>

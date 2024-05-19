@@ -15,14 +15,14 @@ GameWindow::GameWindow(int level, QWidget *parent): QWidget(parent), ui(new Ui::
 void GameWindow::InitGameWindow(int level) { //初始化窗口
     // 载入背景音乐
     bgm = new QMediaPlayer(this);
-    bgm->setMedia(QUrl::fromLocalFile("C:\\YHY\\work\\vscode\\demo\\src\\recourse\\BGM\\GameWindow.mp3"));
+    bgm->setMedia(QUrl("qrc:/sound/recourse/BGM/GameWindow.mp3"));
     bgm->setVolume(50);
     // 初始化计时器
     timer = new QTimer(this);
     connect(timer, QTimer::timeout, this, GameWindow::onTimer);
     // 加载关卡文件
     this->setWindowTitle(QString("LEVEL") + QString::number(level));
-    QFile file(QString("C:/YHY/work/vscode/demo/src/level/") + QString::number(level) + QString("/map.txt"));
+    QFile file(QString(":/data/level/") + QString::number(level) + QString("/map.txt"));
     file.open(QFile::ReadOnly);
     // 初始化地块
     for (int i = 0; i < 9; i++) {
@@ -244,11 +244,11 @@ void GameWindow::Check() { //检测和更新游戏状态
 void GameWindow::mousePressEvent(QMouseEvent *e) { //响应鼠标点击事件，根据点击的防御塔图标生成防御塔
     int x = e->x(), y = e->y();
     if (x >= 1500 && x <= 1600 && y >= 20 && y < 120) {
-        newtower = new myTower(x - 37, y - 46, tr("C:/YHY/work/vscode/demo/src/level/BloodMoonTower.txt"), this);
+        newtower = new myTower(x - 37, y - 46, tr(":/data/level/BloodMoonTower.txt"), this);
         newtower->play();
     }
     if (x >= 1500 && x <= 1600 && y >= 120 && y < 220) {
-        newtower = new myTower(x - 100, y - 100, tr("C:/YHY/work/vscode/demo/src/level/Spirit.txt"), this);
+        newtower = new myTower(x - 100, y - 100, tr(":/data/level/Spirit.txt"), this);
         newtower->play();
     }
     if (x >= 1620 && x <= 1680 && y >= 20 && y <= 100) {
