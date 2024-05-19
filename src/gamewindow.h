@@ -2,6 +2,7 @@
 #define GAMEWINDOW_H
 
 #include <QMouseEvent>
+#include <QMediaPlayer>
 #include <utility>
 #include <vector>
 #include <string>
@@ -16,6 +17,9 @@ class GameWindow;
 
 class GameWindow: public QWidget {
     Q_OBJECT
+
+private:
+    QMediaPlayer *bgm;
     
 public:
     explicit GameWindow(int level, QWidget *parent = nullptr);
@@ -36,7 +40,8 @@ protected:
 private:
     int cost = 0;
     int hp = 5;
-    int bd = 0, fx = 0, jy = 0, kg = 0, kb = 0, qg = 0, yy = 0;
+    int buffnum[8] = {1, 1, 1, 1, 1, 1, 1, 1};
+    int newbufftype = 0;
 
     Ui::GameWindow *ui;
 
@@ -46,8 +51,9 @@ private:
     int time = 0;
 
     class myTower *newtower = nullptr;
-    class QLabel *tower1 = nullptr;
-    class QLabel *tower2 = nullptr;
+    QLabel *newbuff = nullptr;
+    QLabel *tower1 = nullptr;
+    QLabel *tower2 = nullptr;
 
     QString blockname[9];
 

@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT      += core gui
+QT      += multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -35,7 +36,6 @@ SOURCES += \
     mymonster.cpp \
     myobject.cpp \
     myproperty.cpp \
-    myscene.cpp \
     startmenu.cpp \
     gamewindow.cpp \
     main.cpp \
@@ -56,7 +56,6 @@ HEADERS += \
     mymonster.h \
     myobject.h \
     myproperty.h \
-    myscene.h \
     startmenu.h \
     gamewindow.h \
     myblock.h \

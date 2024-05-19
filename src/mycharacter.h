@@ -24,6 +24,7 @@ public:
     class myBlock *belong = nullptr;
     Property pro;
     QVector<class myBlock*> atk;
+    int buff[2] = {0, 0};
     int cd = 0;
 
 public:

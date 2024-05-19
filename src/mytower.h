@@ -16,6 +16,7 @@ class myTower: public myCharacter {
 public:
     int type = 0;
     int cap = 0;
+    bool bd = false, fx = false, qg = false, jy = false, yy = false;
     std::vector<std::pair<int, int>> area;
     QQueue<class myMonster*> bared;
 
@@ -24,6 +25,7 @@ public:
     void bar(myMonster *p);
     void act();
     int dis(int x, int y);
+    void update(int type);
 };
 
 #endif // MYTOWER_H

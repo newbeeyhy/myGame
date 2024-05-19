@@ -69,6 +69,35 @@ int myTower::dis(int x, int y) {
     return abs(x - this->X()) * (x - this->X()) + (y - this->Y()) * (y - this->Y());
 }
 
+
+void myTower::update(int type) {
+    if (type == 1) { //狂暴
+        pro.PATK *= 2;
+        pro.MATK *= 2;
+        pro.TATK *= 2;
+        pro.ATKF *= 2;
+    }
+    if (type == 2) { //冰冻
+        bd = true;
+    }
+    if (type == 3) { //放血
+        fx = true;
+    }
+    if (type == 4) { //群攻
+        pro.ATKF /= 2;
+        qg = true;
+    }
+    if (type == 5) { //击晕
+        jy = true;
+    }
+    if (type == 6) { //鹰眼
+        yy = true;
+    }
+    if (type == 7) { //快攻
+        pro.ATKF *= 2;
+    }
+}
+
 void myTower::act() { //防御塔活动逻辑
     if (alive == false || beset == false) return;
     this->raise();
