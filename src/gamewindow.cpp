@@ -16,7 +16,7 @@ GameWindow::GameWindow(int level, QWidget *parent): QWidget(parent), ui(new Ui::
 void GameWindow::InitGameWindow(int level) { //初始化窗口
     // 载入背景音乐
     bgm = new QMediaPlayer(this);
-    bgm->setMedia(QUrl("qrc:/sound/recourse/BGM/GameWindow.mp3"));
+    bgm->setMedia(QUrl("qrc:/sound/recourse/BGM/shenchizhiying.mp3"));
     bgm->setVolume(30);
     // 初始化计时器
     timer = new QTimer(this);

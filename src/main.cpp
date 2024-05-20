@@ -9,8 +9,8 @@ int main(int argc, char *argv[]) {
     int level = 0;
     StartMenu s;
     LevelSelectMenu l(&level);
-    QMediaPlayer *music = new QMediaPlayer();
-    music->setMedia(QUrl("qrc:/sound/recourse/BGM/StartMenu.mp3"));
+    QMediaPlayer *music = new QMediaPlayer;
+    music->setMedia(QUrl("qrc:/sound/recourse/BGM/Founding Stone.mp3"));
     music->setVolume(30);
     s.show();
     music->play();

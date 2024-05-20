@@ -44,8 +44,11 @@
         <file>recourse/buff/yingyan.png</file>
     </qresource>
     <qresource prefix="/sound">
-        <file>recourse/BGM/GameWindow.mp3</file>
-        <file>recourse/BGM/StartMenu.mp3</file>
+        <file>recourse/BGM/shenchizhiying.mp3</file>
+        <file>recourse/BGM/Merciful Broken Sun.mp3</file>
+        <file>recourse/BGM/In Originium Covered Fields.mp3</file>
+        <file>recourse/BGM/Founding Stone.mp3</file>
+        <file>recourse/BGM/Der Hexenkonig.mp3</file>
     </qresource>
     <qresource prefix="/data">
         <file>level/BloodMoonTower.txt</file>
