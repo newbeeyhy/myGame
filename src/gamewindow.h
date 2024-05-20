@@ -19,7 +19,7 @@ class GameWindow: public QWidget {
     Q_OBJECT
 
 private:
-    QMediaPlayer *bgm;
+    QMediaPlayer *bgm = nullptr;
     
 public:
     explicit GameWindow(int level, QWidget *parent = nullptr);
@@ -54,6 +54,8 @@ private:
     QLabel *newbuff = nullptr;
     QLabel *tower1 = nullptr;
     QLabel *tower2 = nullptr;
+    QLabel *imagbuff[8];
+    QLabel *numbuff[8];
 
     QString blockname[9];
 
