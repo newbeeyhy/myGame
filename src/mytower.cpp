@@ -76,6 +76,10 @@ void myTower::update(int type) {
         pro.MATK *= 2;
         pro.TATK *= 2;
         pro.ATKF *= 2;
+        pro.HP *= 2;
+        pro.maxHP *= 2;
+        attk->setSpeed(50);
+        attkf->setSpeed(50);
     }
     if (type == 2) { //冰冻
         bd = true;
@@ -84,7 +88,9 @@ void myTower::update(int type) {
         fx = true;
     }
     if (type == 4) { //群攻
-        pro.ATKF /= 2;
+        pro.ATKF *= 2;
+        attk->setSpeed(50);
+        attkf->setSpeed(50);
         qg = true;
     }
     if (type == 5) { //击晕
@@ -94,7 +100,9 @@ void myTower::update(int type) {
         yy = true;
     }
     if (type == 7) { //快攻
-        pro.ATKF *= 2;
+        pro.ATKF /= 2;
+        attk->setSpeed(200);
+        attkf->setSpeed(200);
     }
 }
 

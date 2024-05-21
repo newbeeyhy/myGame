@@ -186,6 +186,7 @@ void GameWindow::onTimer() { //响应计时器
 
 void GameWindow::AddMonster() { //根据载入的怪物序列按时间顺序生成怪物
     while(pos < monsterque.size() && monsterque[pos].first == time) {
+        alivemonster++;
         monster.push_back(new myMonster(pos, monsterque[pos].second, this));
         monster.back()->play();
         pos++;
@@ -226,10 +227,11 @@ void GameWindow::RemoveDeath() { //移除死亡单位
             int r = QRandomGenerator::global()->bounded(100);
             if (r < 20) {
                 int x = QRandomGenerator::global()->bounded(1, 8);
-                buffnum[r]++;
-                numbuff[r]->setText("X " + QString::number(buffnum[r]));
+                buffnum[x]++;
+                numbuff[x]->setText("X " + QString::number(buffnum[x]));
             }
             monster[i]->death();
+            alivemonster--;
         }
     }
     n = tower.size();
@@ -257,7 +259,14 @@ void GameWindow::Check() { //检测和更新游戏状态
         Stop();
         ui->pushButtonstart->setEnabled(false);
         ui->pushButtonpause->setEnabled(false);
-        QMessageBox::information(this, tr("Game Over"), tr("You Lose!"));
+        QMessageBox::information(this, tr(":-("), tr("You Lose!"));
+        this->close();
+    }
+    if (pos == monsterque.size() && alivemonster == 0) {
+        Stop();
+        ui->pushButtonstart->setEnabled(false);
+        ui->pushButtonpause->setEnabled(false);
+        QMessageBox::information(this, tr(":-)"), tr("You Win!"));
         this->close();
     }
 }
