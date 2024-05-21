@@ -13,7 +13,7 @@ class myMonster: public myCharacter {
     Q_OBJECT
 
 private:
-    int pos = 0;
+    size_t pos = 0;
     std::vector<std::pair<int, int>> path;
     std::vector<std::pair<int, int>> area;
 

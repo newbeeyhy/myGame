@@ -20,7 +20,8 @@ myMonster::myMonster(int id_, const QString &data, QWidget *parent): myCharacter
     getpro(s);
     //读取并设置初始位置和大小
     s = file.readLine().toStdString();
-    int n = s.length(), i = 0, a[4];
+    size_t n = s.length(), i = 0;
+    int a[4];
     for (int j = 0; j < 4; j++) {
         int x = 0;
         while (s[i] >= '0' && s[i] <= '9' && i < n) {
@@ -72,8 +73,9 @@ myMonster::myMonster(int id_, const QString &data, QWidget *parent): myCharacter
 }
 
 int myMonster::dis() { //计算到终点的距离
-    int res = 0, x = this->X(), y = this->Y(), n = path.size();
-    for (int i = pos; i < n; i++) {
+    int res = 0, x = this->X(), y = this->Y();
+    size_t n = path.size();
+    for (size_t i = pos; i < n; i++) {
         res += abs(path[i].first - x) + abs(path[i].second - y);
         x = path[i].first;
         y = path[i].second; 
@@ -103,15 +105,15 @@ void myMonster::act() { //怪物行动逻辑
         //检测攻击范围内的单位
         atk.clear();
         int x = this->X() / 100, y = this->Y() / 100;
-        int m = area.size();
-        for (int j = 0; j < m; j++) {
+        size_t m = area.size();
+        for (size_t j = 0; j < m; j++) {
             int dx = area[j].first, dy = area[j].second;
             if (x + dx >= 0 && x + dx < 15 && y + dy >= 0 && y + dy < 9) {
                 atk.push_back(isin->block[(y + dy) * 15 + (x + dx)]);
             }
         }
         //选取单位
-        int n = atk.size(), mn = 0x7fffffff;
+        int n = int(atk.size()), mn = 0x7fffffff;
         for (int i = 0; i < n; i++) {
             myBlock *u = atk[i];
             if (u->tower != nullptr) {

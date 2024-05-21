@@ -24,7 +24,8 @@ void myCharacter::death() { //单位死亡
 }
 
 void myCharacter::getpro(std::string s) { //读取单位数值
-    int n = s.length(), i = 0, a[11];
+    size_t n = s.length(), i = 0;
+    int a[11];
     for (int j = 0; j < 11; j++) {
         int x = 0;
         while (s[i] >= '0' && s[i] <= '9' && i < n) {
@@ -53,7 +54,7 @@ void myCharacter::behit(int damage, int type) { //受击
         pro.HP -= std::max(1, damage - pro.PDEF);
     }
     else if (type == 2) {
-        pro.HP -= damage * (1.0 - (double)pro.MDEF / 100);
+        pro.HP -= damage * (1.0 - double(pro.MDEF) / 100);
     }
     if (pro.HP <= 0) alive = false;
 }

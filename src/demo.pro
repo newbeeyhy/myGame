@@ -4,8 +4,8 @@
 #
 #-------------------------------------------------
 
-QT      += core gui
-QT      += multimedia
+QT += core gui
+QT += multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -27,21 +27,11 @@ CONFIG += c++11
 CONFIG += resources_big
 
 SOURCES += \
-        main.cpp \
-        startmenu.cpp \
-    gamewindow.cpp \
-    myobject.cpp \
-    gamewindow.cpp \
-    main.cpp \
-    mycharacter.cpp \
-    mymonster.cpp \
-    myobject.cpp \
-    myproperty.cpp \
-    startmenu.cpp \
     gamewindow.cpp \
     main.cpp \
     myblock.cpp \
     mycharacter.cpp \
+    mytower.cpp \
     mymonster.cpp \
     myobject.cpp \
     myproperty.cpp \
@@ -49,31 +39,19 @@ SOURCES += \
     levelselectmenu.cpp
 
 HEADERS += \
-        startmenu.h \
-    gamewindow.h \
-    myobject.h \
-    gamewindow.h \
-    mycharacter.h \
-    mymonster.h \
-    myobject.h \
-    myproperty.h \
     startmenu.h \
     gamewindow.h \
+    myobject.h \
+    mycharacter.h \
+    mytower.h \
+    mymonster.h \
+    myproperty.h \
     myblock.h \
-    mycharacter.h \
-    mymonster.h \
-    myobject.h \
-    myproperty.h \
-    startmenu.h \
     levelselectmenu.h
 
 FORMS += \
-        startmenu.ui \
-    gamewindow.ui \
-    gamewindow.ui \
     startmenu.ui \
     gamewindow.ui \
-    startmenu.ui \
     levelselectmenu.ui
 
 # Default rules for deployment.
@@ -82,9 +60,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 RESOURCES += \
-    resource.qrc \
-    resource.qrc \
-    resource.qrc
+    resource.qrc 
 
 SUBDIRS += \
     demo.pro

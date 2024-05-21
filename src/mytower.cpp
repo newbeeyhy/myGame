@@ -17,7 +17,8 @@ myTower::myTower(int xx, int yy, const QString &data, QWidget *parent): myCharac
     std::string s = file.readLine().toStdString();
     getpro(s);
     s = file.readLine().toStdString();
-    int n = s.length(), i = 0, a[2];
+    size_t n = s.length(), i = 0;
+    int a[2];
     while (s[i] >= '0' && s[i] <= '9' && i < n) {
         type = type * 10 + s[i] - '0';
         i++;
@@ -124,8 +125,8 @@ void myTower::act() { //防御塔活动逻辑
         //检测攻击范围内的单位
         atk.clear();
         int x = this->X() / 100, y = this->Y() / 100;
-        int m = area.size();
-        for (int j = 0; j < m; j++) {
+        size_t m = area.size();
+        for (size_t j = 0; j < m; j++) {
             int dx = area[j].first, dy = area[j].second;
             if (x + dx >= 0 && x + dx < 15 && y + dy >= 0 && y + dy < 9) {
                 atk.push_back(isin->block[(y + dy) * 15 + (x + dx)]);

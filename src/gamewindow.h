@@ -59,7 +59,7 @@ private:
 
     QString blockname[9];
 
-    int pos = 0;
+    size_t pos = 0;
     int alivemonster = 0;
     std::vector<std::pair<int, QString>> monsterque;
     QVector<std::pair<std::pair<int, int>, class myTower*>> towerque;

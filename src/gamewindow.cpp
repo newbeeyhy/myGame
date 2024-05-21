@@ -20,7 +20,7 @@ void GameWindow::InitGameWindow(int level) { //初始化窗口
     bgm->setVolume(30);
     // 初始化计时器
     timer = new QTimer(this);
-    connect(timer, QTimer::timeout, this, GameWindow::onTimer);
+    connect(timer, &QTimer::timeout, this, &GameWindow::onTimer);
     // 加载关卡文件
     this->setWindowTitle(QString("LEVEL") + QString::number(level));
     QFile file(QString(":/data/level/") + QString::number(level) + QString("/map.txt"));
@@ -32,7 +32,7 @@ void GameWindow::InitGameWindow(int level) { //初始化窗口
     for (int i = 0; i < 9; i++) {
         std::string s = file.readLine().toStdString();
         for (int j = 0; j < 15; j++) {
-            int k = s[j] - '1';
+            int k = s[size_t(j)] - '1';
             if (k == 4) block.push_back(new myBlock(1, blockname[k], this));
             else block.push_back(new myBlock(2, blockname[k], this));
             block[i * 15 + j]->setGeometry(j * 100, i * 100, 100, 100);
@@ -54,7 +54,7 @@ void GameWindow::InitGameWindow(int level) { //初始化窗口
     tower2->lower();
     // 读入初始费用
     std::string s = file.readLine().toStdString();
-    int i = 0;
+    size_t i = 0;
     while (s[i] >= '0' && s[i] <= '9' && i < s.length()) {
         cost = cost * 10 + s[i] - '0';
         i++;
@@ -187,7 +187,7 @@ void GameWindow::onTimer() { //响应计时器
 void GameWindow::AddMonster() { //根据载入的怪物序列按时间顺序生成怪物
     while(pos < monsterque.size() && monsterque[pos].first == time) {
         alivemonster++;
-        monster.push_back(new myMonster(pos, monsterque[pos].second, this));
+        monster.push_back(new myMonster(int(pos), monsterque[pos].second, this));
         monster.back()->play();
         pos++;
     }
