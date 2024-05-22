@@ -1,5 +1,14 @@
 项目基于Qt库开发
 
+## 操作说明
+1. 怪物按时间顺序生成，到达终点扣除关卡HP，消灭所有怪物获得胜利。
+2. 防御塔使用鼠标拖动到地块上进行部署，每个防御塔消耗100cost，每击杀一个怪物增加50cost。
+3. 右侧buff栏显示我方buff，每种buff初始数量为1个，击杀怪物有20%概率随机获得一种buff。
+4. buff通过拖动施予我方防御塔，每个防御塔可以装备两个buff，buff持续时间无限，一旦装备无法更换。
+5. 怪物击杀我方单位同样有20%概率获得随机敌方buff，敌方buff会自动为新生成的怪物装备。
+6. 敌方buff最多两个，每当敌方获得新的buff，若已经拥有两个buff，会将最早获得的删除，并加入新获得的buff。
+7. buff的功能主要为改变数值，获得新的能力，部分buff功能尚未实现，敬请期待。
+
 ## 类的继承和派生关系
 
 ```
@@ -12,6 +21,7 @@ QWidget
 
 QLabel
 └─ myObject
+   ├─ myBlood
    ├─ myBlock
    └─ myCharacter
       ├─ myTower
@@ -25,6 +35,8 @@ myProperty
 - 游戏窗口类 **GameWindow** 继承 **QWidget** 类。
 
 - 实体类 **myObject** 继承 **QLabel** 类，含有虚函数 **act()** 用于派生类重载，**act()** 是实体活动的主要逻辑。
+
+- **myBlood** 类用于显示单位血条。
 
 - **myBlock** 类用于显示地块，含有指向存在于地块上的单位的指针，单位之间的交互基本都是通过地块作为中介进行。
 
@@ -48,11 +60,28 @@ demo
    │  │  ├─ archer.txt
    │  │  ├─ bat.txt
    │  │  └─ map.txt
+   │  ├─ 2
+   │  │  ├─ archer1.txt
+   │  │  ├─ archer2.txt
+   │  │  ├─ archer3.txt
+   │  │  ├─ archer4.txt
+   │  │  ├─ archer5.txt
+   │  │  ├─ bat1.txt
+   │  │  ├─ bat2.txt
+   │  │  ├─ bat3.txt
+   │  │  ├─ bat4.txt
+   │  │  ├─ bat5.txt
+   │  │  └─ map.txt
    │  ├─ BloodMoonTower.txt
    │  └─ Spirit.txt
+   ├─ levelselectmenu.cpp
+   ├─ levelselectmenu.h
+   ├─ levelselectmenu.ui
    ├─ main.cpp
    ├─ myblock.cpp
    ├─ myblock.h
+   ├─ myblood.cpp
+   ├─ myblood.h
    ├─ mycharacter.cpp
    ├─ mycharacter.h
    ├─ mymonster.cpp
@@ -64,6 +93,12 @@ demo
    ├─ mytower.cpp
    ├─ mytower.h
    ├─ recourse
+   │  ├─ BGM
+   │  │  ├─ Der Hexenkonig.mp3
+   │  │  ├─ Founding Stone.mp3
+   │  │  ├─ In Originium Covered Fields.mp3
+   │  │  ├─ Merciful Broken Sun.mp3
+   │  │  └─ shenchizhiying.mp3
    │  ├─ block
    │  │  ├─ c.png
    │  │  ├─ d.png
@@ -71,6 +106,9 @@ demo
    │  │  ├─ gd.png
    │  │  ├─ gl.png
    │  │  ├─ gld.png
+   │  │  ├─ glrd.png
+   │  │  ├─ glru.png
+   │  │  ├─ glrud.png
    │  │  ├─ glu.png
    │  │  ├─ gr.png
    │  │  ├─ grd.png
@@ -80,6 +118,74 @@ demo
    │  │  ├─ ld.png
    │  │  ├─ r.png
    │  │  └─ rd.png
+   │  ├─ blood
+   │  │  ├─ 0.png
+   │  │  ├─ 10.png
+   │  │  ├─ 100.png
+   │  │  ├─ 12.png
+   │  │  ├─ 14.png
+   │  │  ├─ 16.png
+   │  │  ├─ 18.png
+   │  │  ├─ 2.png
+   │  │  ├─ 20.png
+   │  │  ├─ 22.png
+   │  │  ├─ 24.png
+   │  │  ├─ 26.png
+   │  │  ├─ 28.png
+   │  │  ├─ 30.png
+   │  │  ├─ 32.png
+   │  │  ├─ 34.png
+   │  │  ├─ 36.png
+   │  │  ├─ 38.png
+   │  │  ├─ 4.png
+   │  │  ├─ 40.png
+   │  │  ├─ 42.png
+   │  │  ├─ 44.png
+   │  │  ├─ 46.png
+   │  │  ├─ 48.png
+   │  │  ├─ 50.png
+   │  │  ├─ 52.png
+   │  │  ├─ 54.png
+   │  │  ├─ 56.png
+   │  │  ├─ 58.png
+   │  │  ├─ 6.png
+   │  │  ├─ 60.png
+   │  │  ├─ 62.png
+   │  │  ├─ 64.png
+   │  │  ├─ 66.png
+   │  │  ├─ 68.png
+   │  │  ├─ 70.png
+   │  │  ├─ 72.png
+   │  │  ├─ 74.png
+   │  │  ├─ 76.png
+   │  │  ├─ 78.png
+   │  │  ├─ 8.png
+   │  │  ├─ 80.png
+   │  │  ├─ 82.png
+   │  │  ├─ 84.png
+   │  │  ├─ 86.png
+   │  │  ├─ 88.png
+   │  │  ├─ 90.png
+   │  │  ├─ 92.png
+   │  │  ├─ 94.png
+   │  │  ├─ 96.png
+   │  │  └─ 98.png
+   │  ├─ buff
+   │  │  ├─ bingdong.png
+   │  │  ├─ fangxie.png
+   │  │  ├─ fusheng.png
+   │  │  ├─ huoli.png
+   │  │  ├─ jiangu.png
+   │  │  ├─ jisu.png
+   │  │  ├─ jiyun.png
+   │  │  ├─ kuaigong.png
+   │  │  ├─ kuangbao.png
+   │  │  ├─ liliang.png
+   │  │  ├─ qungong.png
+   │  │  ├─ tudu.png
+   │  │  ├─ wangyu.png
+   │  │  ├─ yingyan.png
+   │  │  └─ yinni.png
    │  ├─ Grass Tileset.png
    │  ├─ monster
    │  │  ├─ archer-fliped.gif
