@@ -83,6 +83,36 @@ int myMonster::dis() { //计算到终点的距离
     return res;
 }
 
+void myMonster::update(int type) {
+    if (type == 1) { //复生
+        fs = 1;
+    }
+    if (type == 2) { //活力
+        pro.HP *= 2;
+        pro.maxHP *= 2;
+    }
+    if (type == 3) { //坚固
+        pro.PDEF *= 2;
+        pro.MDEF *= 2;
+    }
+    if (type == 4) { //急速
+        pro.SPD *= 2;
+    }
+    if (type == 5) { //涂毒
+        td = 1;
+    }
+    if (type == 6) { //亡语
+        wy = 1;
+    }
+    if (type == 7) { //隐匿
+        yn = 1;
+    }
+    if (type == 8) { //力量
+        pro.PATK *= 2;
+        pro.MATK *= 2;
+    }
+}
+
 void myMonster::act() { //怪物行动逻辑
     if (alive == false || beset == false) return;
     //更新所在地块

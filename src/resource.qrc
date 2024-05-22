@@ -42,6 +42,14 @@
         <file>recourse/buff/kuangbao.png</file>
         <file>recourse/buff/qungong.png</file>
         <file>recourse/buff/yingyan.png</file>
+        <file>recourse/buff/fusheng.png</file>
+        <file>recourse/buff/huoli.png</file>
+        <file>recourse/buff/jiangu.png</file>
+        <file>recourse/buff/jisu.png</file>
+        <file>recourse/buff/tudu.png</file>
+        <file>recourse/buff/wangyu.png</file>
+        <file>recourse/buff/yinni.png</file>
+        <file>recourse/buff/liliang.png</file>
     </qresource>
     <qresource prefix="/sound">
         <file>recourse/BGM/shenchizhiying.mp3</file>

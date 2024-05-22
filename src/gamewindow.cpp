@@ -189,6 +189,8 @@ void GameWindow::AddMonster() { //根据载入的怪物序列按时间顺序生�
         alivemonster++;
         monster.push_back(new myMonster(int(pos), monsterque[pos].second, this));
         monster.back()->play();
+        monster.back()->update(buffque[0]);
+        monster.back()->update(buffque[1]);
         pos++;
     }
 }
@@ -238,6 +240,20 @@ void GameWindow::RemoveDeath() { //移除死亡单位
     for (int i = 0; i < n; i++) {
         if (tower[i]->alive == false && tower[i]->beset == true) {
             tower[i]->belong->tower = nullptr;
+            int r = QRandomGenerator::global()->bounded(100);
+            if (r < 20) {
+                int x = QRandomGenerator::global()->bounded(1, 9);
+                if (buffque[0] == 0) {
+                    buffque[0] = x;
+                }
+                else if (buffque[1] == 0) {
+                    buffque[1] = x;
+                }
+                else {
+                    buffque[1] = buffque[0];
+                    buffque[0] = x;
+                }
+            }
             tower[i]->death();
         }
     }
