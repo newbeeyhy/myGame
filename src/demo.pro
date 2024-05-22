@@ -31,6 +31,7 @@ SOURCES += \
     main.cpp \
     myblock.cpp \
     mycharacter.cpp \
+    myblood.cpp \
     mytower.cpp \
     mymonster.cpp \
     myobject.cpp \
@@ -42,6 +43,7 @@ HEADERS += \
     startmenu.h \
     gamewindow.h \
     myobject.h \
+    myblood.h \
     mycharacter.h \
     mytower.h \
     mymonster.h \

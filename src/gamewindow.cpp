@@ -83,43 +83,36 @@ void GameWindow::InitGameWindow(int level) { //初始化窗口
     // 设置buff图标
     ui->kuangbao->setPixmap(QPixmap(tr(":/image/recourse/buff/kuangbao.png")));
     ui->kuangbao->setScaledContents(true);
-    ui->kuangbao->show();
     ui->kuangbaon->setText("X " + QString::number(buffnum[1]));
     imagbuff[1] = ui->kuangbao;
     numbuff[1] = ui->kuangbaon;
     ui->bingdong->setPixmap(QPixmap(tr(":/image/recourse/buff/bingdong.png")));
     ui->bingdong->setScaledContents(true);
-    ui->bingdong->show();
     ui->bingdongn->setText("X " + QString::number(buffnum[2]));
     imagbuff[2] = ui->bingdong;
     numbuff[2] = ui->bingdongn;
     ui->fangxie->setPixmap(QPixmap(tr(":/image/recourse/buff/fangxie.png")));
     ui->fangxie->setScaledContents(true);
-    ui->fangxie->show();
     ui->fangxien->setText("X " + QString::number(buffnum[3]));
     imagbuff[3] = ui->fangxie;
     numbuff[3] = ui->fangxien;
     ui->qungong->setPixmap(QPixmap(tr(":/image/recourse/buff/qungong.png")));
     ui->qungong->setScaledContents(true);
-    ui->qungong->show();
     ui->qungongn->setText("X " + QString::number(buffnum[4]));
     imagbuff[4] = ui->qungong;
     numbuff[4] = ui->qungongn;
     ui->jiyun->setPixmap(QPixmap(tr(":/image/recourse/buff/jiyun.png")));
     ui->jiyun->setScaledContents(true);
-    ui->jiyun->show();
     ui->jiyunn->setText("X " + QString::number(buffnum[5]));
     imagbuff[5] = ui->jiyun;
     numbuff[5] = ui->jiyunn;
     ui->yingyan->setPixmap(QPixmap(tr(":/image/recourse/buff/yingyan.png")));
     ui->yingyan->setScaledContents(true);
-    ui->yingyan->show();
     ui->yingyann->setText("X " + QString::number(buffnum[6]));
     imagbuff[6] = ui->yingyan;
     numbuff[6] = ui->yingyann;
     ui->kuaigong->setPixmap(QPixmap(tr(":/image/recourse/buff/kuaigong.png")));
     ui->kuaigong->setScaledContents(true);
-    ui->kuaigong->show();
     ui->kuaigongn->setText("X " + QString::number(buffnum[7]));
     imagbuff[7] = ui->kuaigong;
     numbuff[7] = ui->kuaigongn;
@@ -364,7 +357,7 @@ void GameWindow::mouseReleaseEvent(QMouseEvent *e) { //响应鼠标释放事件�
             return;
         }
         towerque.push_back(std::make_pair(std::make_pair(bx, by), newtower));
-        newtower->move(bx * 100 + (100 - newtower->width()) / 2, by * 100 + (100 - newtower->height()) / 2);
+        newtower->Move(bx * 100 + (100 - newtower->width()) / 2, by * 100 + (100 - newtower->height()) / 2);
         newtower = nullptr;
     }
     if (newbuff != nullptr) {
@@ -403,7 +396,7 @@ void GameWindow::mouseReleaseEvent(QMouseEvent *e) { //响应鼠标释放事件�
 
 void GameWindow::mouseMoveEvent(QMouseEvent *e) { //响应鼠标移动事件，拖动生成的防御塔到目标位置
     if (newtower != nullptr) {
-        newtower->move(e->x() - newtower->width() / 2, e->y() - newtower->height() / 2);
+        newtower->Move(e->x() - newtower->width() / 2, e->y() - newtower->height() / 2);
     }
     if (newbuff != nullptr) {
         newbuff->move(e->x() - 30, e->y() - 30);

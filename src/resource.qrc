@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/image">
+    <qresource prefix = "/image">
         <file>recourse/block/c.png</file>
         <file>recourse/block/d.png</file>
         <file>recourse/block/l.png</file>
@@ -51,14 +51,14 @@
         <file>recourse/buff/yinni.png</file>
         <file>recourse/buff/liliang.png</file>
     </qresource>
-    <qresource prefix="/sound">
+    <qresource prefix = "/sound">
         <file>recourse/BGM/shenchizhiying.mp3</file>
         <file>recourse/BGM/Merciful Broken Sun.mp3</file>
         <file>recourse/BGM/In Originium Covered Fields.mp3</file>
         <file>recourse/BGM/Founding Stone.mp3</file>
         <file>recourse/BGM/Der Hexenkonig.mp3</file>
     </qresource>
-    <qresource prefix="/data">
+    <qresource prefix = "/data">
         <file>level/BloodMoonTower.txt</file>
         <file>level/Spirit.txt</file>
         <file>level/1/archer.txt</file>
@@ -75,5 +75,58 @@
         <file>level/2/bat4.txt</file>
         <file>level/2/bat5.txt</file>
         <file>level/2/map.txt</file>
+    </qresource>
+    <qresource prefix = "/blood">
+        <file>recourse/blood/0.png</file>
+        <file>recourse/blood/2.png</file>
+        <file>recourse/blood/4.png</file>
+        <file>recourse/blood/6.png</file>
+        <file>recourse/blood/8.png</file>
+        <file>recourse/blood/10.png</file>
+        <file>recourse/blood/12.png</file>
+        <file>recourse/blood/14.png</file>
+        <file>recourse/blood/16.png</file>
+        <file>recourse/blood/18.png</file>
+        <file>recourse/blood/20.png</file>
+        <file>recourse/blood/22.png</file>
+        <file>recourse/blood/24.png</file>
+        <file>recourse/blood/26.png</file>
+        <file>recourse/blood/28.png</file>
+        <file>recourse/blood/30.png</file>
+        <file>recourse/blood/32.png</file>
+        <file>recourse/blood/34.png</file>
+        <file>recourse/blood/36.png</file>
+        <file>recourse/blood/38.png</file>
+        <file>recourse/blood/40.png</file>
+        <file>recourse/blood/42.png</file>
+        <file>recourse/blood/44.png</file>
+        <file>recourse/blood/46.png</file>
+        <file>recourse/blood/48.png</file>
+        <file>recourse/blood/50.png</file>
+        <file>recourse/blood/52.png</file>
+        <file>recourse/blood/54.png</file>
+        <file>recourse/blood/56.png</file>
+        <file>recourse/blood/58.png</file>
+        <file>recourse/blood/60.png</file>
+        <file>recourse/blood/62.png</file>
+        <file>recourse/blood/64.png</file>
+        <file>recourse/blood/66.png</file>
+        <file>recourse/blood/68.png</file>
+        <file>recourse/blood/70.png</file>
+        <file>recourse/blood/72.png</file>
+        <file>recourse/blood/74.png</file>
+        <file>recourse/blood/76.png</file>
+        <file>recourse/blood/78.png</file>
+        <file>recourse/blood/80.png</file>
+        <file>recourse/blood/82.png</file>
+        <file>recourse/blood/84.png</file>
+        <file>recourse/blood/86.png</file>
+        <file>recourse/blood/88.png</file>
+        <file>recourse/blood/90.png</file>
+        <file>recourse/blood/92.png</file>
+        <file>recourse/blood/94.png</file>
+        <file>recourse/blood/96.png</file>
+        <file>recourse/blood/98.png</file>
+        <file>recourse/blood/100.png</file>
     </qresource>
 </RCC>

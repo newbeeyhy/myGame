@@ -20,6 +20,7 @@ void myCharacter::death() { //单位死亡
     beset = false;
     nowm->stop();
     if (belong != nullptr) belong->monster.remove(id);
+    this->blood->clear();
     this->clear();
 }
 
@@ -47,6 +48,7 @@ void myCharacter::hit(myCharacter *target) { //攻击目标
 }
 
 void myCharacter::behit(int damage, int type) { //受击
+    emit hpchanged();
     if (type == 0) {
         pro.HP = std::min(pro.maxHP, pro.HP + damage);
     }
@@ -66,10 +68,19 @@ void myCharacter::setnowm(QMovie *m) { //设置播放动画
     this->setMovie(nowm);
 }
 
+void myCharacter::Move(int x, int y) {
+    this->move(x, y);
+    emit poschanged();
+}
+
 int myCharacter::X() { //获取x坐标
     return this->x() + this->width() / 2;
 }
 
 int myCharacter::Y() { //获取y坐标
     return this->y() + this->height() / 2;
+}
+
+myCharacter::~myCharacter() {
+    delete blood;
 }

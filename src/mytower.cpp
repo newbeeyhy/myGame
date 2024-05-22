@@ -59,6 +59,7 @@ myTower::myTower(int xx, int yy, const QString &data, QWidget *parent): myCharac
         if (s[i] == ';' || i >= n) break;
         i++;
     }
+    this->blood = new myBlood(this, parent);
 }
 
 void myTower::bar(myMonster *p) {
@@ -110,6 +111,7 @@ void myTower::update(int type) {
 void myTower::act() { //防御塔活动逻辑
     if (alive == false || beset == false) return;
     this->raise();
+    this->blood->raise();
     //更新所在地块
     if (belong == nullptr) {
         int x = this->X() / 100, y = this->Y() / 100;

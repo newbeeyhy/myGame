@@ -70,6 +70,7 @@ myMonster::myMonster(int id_, const QString &data, QWidget *parent): myCharacter
         if (s[i] == ';' || i >= n) break;
         i++;
     }
+    this->blood = new myBlood(this, parent);
 }
 
 int myMonster::dis() { //计算到终点的距离
@@ -160,7 +161,7 @@ void myMonster::act() { //怪物行动逻辑
                 if (pos >= path.size()) return;
                 int x = this->X(), y = this->Y();
                 if (abs(x - path[pos].first) < pro.SPD && abs(y - path[pos].second) < pro.SPD) {
-                    move(path[pos].first, path[pos].second);
+                    Move(path[pos].first, path[pos].second);
                     x = path[pos].first; y = path[pos].second;
                     pos++;
                 }
@@ -170,7 +171,7 @@ void myMonster::act() { //怪物行动逻辑
                     if (dir == -1) this->setnowm(normf);
                 }
                 if (dx != 0) dir = dx;
-                move(x - this->width() / 2 + dx * pro.SPD, y - this->height() / 2 + dy * pro.SPD);
+                Move(x - this->width() / 2 + dx * pro.SPD, y - this->height() / 2 + dy * pro.SPD);
             }
             lop = (lop + 1) % (pro.ATKF * 4);
         }
@@ -180,7 +181,7 @@ void myMonster::act() { //怪物行动逻辑
             if (pos >= path.size()) return;
             int x = this->X(), y = this->Y();
             if (abs(x - path[pos].first) < pro.SPD && abs(y - path[pos].second) < pro.SPD) {
-                move(path[pos].first, path[pos].second);
+                Move(path[pos].first, path[pos].second);
                 x = path[pos].first; y = path[pos].second;
                 pos++;
             }
@@ -190,7 +191,7 @@ void myMonster::act() { //怪物行动逻辑
                 if (dir == -1) this->setnowm(normf);
             }
             if (dx != 0) dir = dx;
-            move(x - this->width() / 2 + dx * pro.SPD, y - this->height() / 2 + dy * pro.SPD);
+            Move(x - this->width() / 2 + dx * pro.SPD, y - this->height() / 2 + dy * pro.SPD);
         }
     }
     //选取阻挡单位进行攻击

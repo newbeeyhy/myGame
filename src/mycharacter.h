@@ -3,6 +3,7 @@
 
 #include "myproperty.h"
 #include "myobject.h"
+#include "myblood.h"
 #include <QWidget>
 #include <QVector>
 #include <QString>
@@ -18,6 +19,7 @@ class myCharacter: public myObject {
 public:
     int id;
     int dir;
+    class myBlood *blood = nullptr;
     QString name;
     QMovie *nowm = nullptr;
     QMovie *norm = nullptr, *normf = nullptr, *attk = nullptr, *attkf = nullptr, *dead = nullptr, *deadf = nullptr;
@@ -26,6 +28,10 @@ public:
     QVector<class myBlock*> atk;
     int buff[2] = {0, 0};
     int cd = 0;
+
+signals:
+    void hpchanged();
+    void poschanged();
 
 public:
     explicit myCharacter(QWidget *parent = nullptr);
@@ -36,8 +42,10 @@ public:
     void getpro(std::string s);
     void hit(myCharacter *target);
     void behit(int damage, int type);
+    void Move(int x, int y);
     int X();
     int Y();
+    ~myCharacter();
 };
 
 #endif // MYCHARACTER_H
