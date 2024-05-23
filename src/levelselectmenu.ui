@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resource.qrc">
+    <normaloff>:/icon/recourse/icon/gem.png</normaloff>:/icon/recourse/icon/gem.png</iconset>
+  </property>
   <widget class="QPushButton" name="pushButton1">
    <property name="geometry">
     <rect>
@@ -40,6 +44,8 @@
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

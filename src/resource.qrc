@@ -129,4 +129,8 @@
         <file>recourse/blood/98.png</file>
         <file>recourse/blood/100.png</file>
     </qresource>
+    <qresource prefix = "/icon">
+        <file>recourse/icon/gem.png</file>
+    </qresource>
+
 </RCC>

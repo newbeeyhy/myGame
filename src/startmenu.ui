@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>StartMenu</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resource.qrc">
+    <normaloff>:/icon/recourse/icon/gem.png</normaloff>:/icon/recourse/icon/gem.png</iconset>
+  </property>
   <widget class="QPushButton" name="pushButtonStartGame">
    <property name="geometry">
     <rect>
@@ -41,6 +45,8 @@
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
  <connections/>
 </ui>
