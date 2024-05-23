@@ -21,6 +21,7 @@ void myCharacter::death() { //单位死亡
     nowm->stop();
     if (belong != nullptr) belong->monster.remove(id);
     this->blood->clear();
+    this->~myCharacter();
     this->clear();
 }
 
@@ -82,5 +83,12 @@ int myCharacter::Y() { //获取y坐标
 }
 
 myCharacter::~myCharacter() {
-    delete blood;
+    if (blood != nullptr) delete blood;
+    if (nowm != nullptr) delete nowm;
+    if (norm != nullptr) delete norm;
+    if (normf != nullptr) delete normf;
+    if (attk != nullptr) delete attk;
+    if (attkf != nullptr) delete attkf;
+    if (dead != nullptr) delete dead;
+    if (deadf != nullptr) delete deadf;
 }
