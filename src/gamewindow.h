@@ -28,6 +28,8 @@ public:
 public slots:
     void on_pushButtonstart_clicked();
     void on_pushButtonpause_clicked();
+    void on_pushButtonsave_clicked();
+    void on_pushButtonload_clicked();
     void onTimer();
     void Start();
     void Stop();

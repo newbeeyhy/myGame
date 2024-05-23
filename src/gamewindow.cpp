@@ -124,12 +124,24 @@ void GameWindow::on_pushButtonstart_clicked() { // 开始按钮
     Start();
     ui->pushButtonstart->setEnabled(false);
     ui->pushButtonpause->setEnabled(true);
+    ui->pushButtonsave->setEnabled(false);
+    ui->pushButtonload->setEnabled(false);
 }
 
 void GameWindow::on_pushButtonpause_clicked() { // 暂停按钮
     Stop();
     ui->pushButtonstart->setEnabled(true);
     ui->pushButtonpause->setEnabled(false);
+    ui->pushButtonsave->setEnabled(true);
+    ui->pushButtonload->setEnabled(true);
+}
+
+void GameWindow::on_pushButtonsave_clicked() {
+    
+}
+
+void GameWindow::on_pushButtonload_clicked() {
+
 }
 
 void GameWindow::Start() { //所有单位开始运动
@@ -251,7 +263,6 @@ void GameWindow::RemoveDeath() { //移除死亡单位
         }
     }
 }
-
 
 void GameWindow::Check() { //检测和更新游戏状态
     int n = monster.size();

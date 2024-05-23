@@ -150,7 +150,7 @@ void myTower::act() { //防御塔活动逻辑
     if (itk != nullptr) {
         if (itk->X() - this->X() < 0) dir = -1;
         if (itk->X() - this->X() > 0) dir = 1;
-        if (dir == 1) this->setnowm(attk);
+        if (dir == 1 || dir == 0) this->setnowm(attk);
         if (dir == -1) this->setnowm(attkf);
         hit(itk);
         if (!bared.empty()) {
@@ -161,7 +161,7 @@ void myTower::act() { //防御塔活动逻辑
         }
     }
     else {
-        if (dir == 1) this->setnowm(norm);
+        if (dir == 1 || dir == 0) this->setnowm(norm);
         if (dir == -1) this->setnowm(normf);
         cd = 0;
     }

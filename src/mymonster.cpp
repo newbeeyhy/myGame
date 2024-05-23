@@ -167,7 +167,7 @@ void myMonster::act() { //怪物行动逻辑
                 }
                 int dx = (path[pos].first - x) / std::max(1, abs(path[pos].first - x)), dy = (path[pos].second - y) / std::max(1, abs(path[pos].second - y));
                 if (dir != dx) {
-                    if (dir == 1) this->setnowm(norm);
+                    if (dir == 1 || dir == 0) this->setnowm(norm);
                     if (dir == -1) this->setnowm(normf);
                 }
                 if (dx != 0) dir = dx;
@@ -187,7 +187,7 @@ void myMonster::act() { //怪物行动逻辑
             }
             int dx = (path[pos].first - x) / std::max(1, abs(path[pos].first - x)), dy = (path[pos].second - y) / std::max(1, abs(path[pos].second - y));
             if (dir != dx) {
-                if (dir == 1) this->setnowm(norm);
+                if (dir == 1 || dir == 0) this->setnowm(norm);
                 if (dir == -1) this->setnowm(normf);
             }
             if (dx != 0) dir = dx;
@@ -201,7 +201,7 @@ void myMonster::act() { //怪物行动逻辑
     if (itk != nullptr) {
         if (itk->X() - this->X() < 0) dir = -1;
         if (itk->X() - this->X() > 0) dir = 1;
-        if (dir == 1) this->setnowm(attk);
+        if (dir == 1 || dir == 0) this->setnowm(attk);
         if (dir == -1) this->setnowm(attkf);
         hit(itk);
         if (belong->tower != nullptr && bebared == true) {
@@ -211,7 +211,7 @@ void myMonster::act() { //怪物行动逻辑
         }
     }
     else {
-        if (dir == 1) this->setnowm(norm);
+        if (dir == 1 || dir == 0) this->setnowm(norm);
         if (dir == -1) this->setnowm(normf);
         cd = 0;
     }

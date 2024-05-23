@@ -484,6 +484,32 @@
     <enum>Qt::Horizontal</enum>
    </property>
   </widget>
+  <widget class="QPushButton" name="pushButtonsave">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>910</y>
+     <width>93</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>save</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButtonload">
+   <property name="geometry">
+    <rect>
+     <x>310</x>
+     <y>910</y>
+     <width>93</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>load</string>
+   </property>
+  </widget>
  </widget>
  <resources>
   <include location="resource.qrc"/>
