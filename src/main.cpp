@@ -1,3 +1,11 @@
+// todo 未生成的怪物
+// todo 已生成的怪物（位置，属性，buff）
+// todo 已放置的防御塔（位置，属性，buff）
+// todo cost
+// todo HP
+// todo buff数量
+// todo buff队列
+
 #include "levelselectmenu.h"
 #include "gamewindow.h"
 #include "startmenu.h"
