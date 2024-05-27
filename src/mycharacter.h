@@ -25,7 +25,6 @@ public:
     QMovie *norm = nullptr, *normf = nullptr, *attk = nullptr, *attkf = nullptr, *dead = nullptr, *deadf = nullptr;
     class myBlock *belong = nullptr;
     Property pro;
-    QVector<class myBlock*> atk;
     int buff[2] = {0, 0};
     int cd = 0;
 

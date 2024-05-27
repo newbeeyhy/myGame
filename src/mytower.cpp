@@ -124,25 +124,19 @@ void myTower::act() { //防御塔活动逻辑
         itk = bared.front();
     }
     else {
-        //检测攻击范围内的单位
-        atk.clear();
-        int x = this->X() / 100, y = this->Y() / 100;
+        //检测攻击范围内的单位, 选取单位
+        int x = this->X() / 100, y = this->Y() / 100, mn = 0x7fffffff;
         size_t m = area.size();
         for (size_t j = 0; j < m; j++) {
             int dx = area[j].first, dy = area[j].second;
             if (x + dx >= 0 && x + dx < 15 && y + dy >= 0 && y + dy < 9) {
-                atk.push_back(isin->block[(y + dy) * 15 + (x + dx)]);
-            }
-        }
-        //选取单位进行攻击
-        int n = atk.size(), mn = 0x7fffffff;
-        for (int i = 0; i < n; i++) {
-            myBlock *u = atk[i];
-            QMap<int, myMonster*>::const_iterator it = u->monster.constBegin();
-            for (; it != u->monster.constEnd(); it++) {
-                if ((*it)->dis() < mn) {
-                    mn = (*it)->dis();
-                    itk = *it;
+                myBlock *u = isin->block[(y + dy) * 15 + (x + dx)];
+                QMap<int, myMonster*>::const_iterator it = u->monster.constBegin();
+                for (; it != u->monster.constEnd(); it++) {
+                    if ((*it)->dis() < mn) {
+                        mn = (*it)->dis();
+                        itk = *it;
+                    }
                 }
             }
         }
@@ -165,4 +159,9 @@ void myTower::act() { //防御塔活动逻辑
         if (dir == -1) this->setnowm(normf);
         cd = 0;
     }
+}
+
+
+myTower::~myTower() {
+    
 }

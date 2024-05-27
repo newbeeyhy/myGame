@@ -8,20 +8,19 @@ myCharacter::myCharacter(QWidget *parent): myObject(parent) { //构造函数
 void myCharacter::play() { //单位开始运行
     if (alive == false) return;
     beset = true;
-    nowm->start();
+    if (nowm != nullptr) nowm->start();
 }
 
 void myCharacter::stay() { //单位暂停运行
     if (alive == false) return;
-    nowm->stop();
+    if (nowm != nullptr) nowm->stop();
 }
 
 void myCharacter::death() { //单位死亡
     beset = false;
-    nowm->stop();
+    if (nowm != nullptr) nowm->stop();
     if (belong != nullptr) belong->monster.remove(id);
     this->blood->clear();
-    this->~myCharacter();
     this->clear();
 }
 
@@ -83,12 +82,33 @@ int myCharacter::Y() { //获取y坐标
 }
 
 myCharacter::~myCharacter() {
-    if (blood != nullptr) delete blood;
-    if (nowm != nullptr) delete nowm;
-    if (norm != nullptr) delete norm;
-    if (normf != nullptr) delete normf;
-    if (attk != nullptr) delete attk;
-    if (attkf != nullptr) delete attkf;
-    if (dead != nullptr) delete dead;
-    if (deadf != nullptr) delete deadf;
+    if (blood != nullptr) {
+        delete blood;
+        blood = nullptr;
+    }
+    nowm = nullptr;
+    if (norm != nullptr) {
+        delete norm;
+        norm = nullptr;
+    }
+    if (normf != nullptr) {
+        delete normf;
+        normf = nullptr;
+    }
+    if (attk != nullptr) {
+        delete attk;
+        attk = nullptr;
+    }
+    if (attkf != nullptr) {
+        delete attkf;
+        attkf = nullptr;
+    }
+    if (dead != nullptr) {
+        delete dead;
+        dead = nullptr;
+    }
+    if (deadf != nullptr) {
+        delete deadf;
+        deadf = nullptr;
+    }
 }

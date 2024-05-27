@@ -19,6 +19,7 @@ private slots:
 public:
     explicit myBlood(myCharacter *b, QWidget *parent = nullptr);
     void act();
+    ~myBlood();
 };
 
 #endif // MYBLOOD_H

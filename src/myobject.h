@@ -14,6 +14,7 @@ public:
     bool alive = true;
     class GameWindow *isin = nullptr;
     virtual void act() = 0;
+    ~myObject();
 };
 
 #endif // MYOBJECT_H

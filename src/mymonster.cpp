@@ -133,24 +133,18 @@ void myMonster::act() { //怪物行动逻辑
     }
     myTower * itk = nullptr;
     if (bebared == false) {
-        //检测攻击范围内的单位
-        atk.clear();
-        int x = this->X() / 100, y = this->Y() / 100;
+        //检测攻击范围内的单位, 选取单位
+        int x = this->X() / 100, y = this->Y() / 100, mn = 0x7fffffff;
         size_t m = area.size();
         for (size_t j = 0; j < m; j++) {
             int dx = area[j].first, dy = area[j].second;
             if (x + dx >= 0 && x + dx < 15 && y + dy >= 0 && y + dy < 9) {
-                atk.push_back(isin->block[(y + dy) * 15 + (x + dx)]);
-            }
-        }
-        //选取单位
-        int n = int(atk.size()), mn = 0x7fffffff;
-        for (int i = 0; i < n; i++) {
-            myBlock *u = atk[i];
-            if (u->tower != nullptr) {
-                if (u->tower->dis(this->X(), this->Y()) < mn) {
-                    mn = u->tower->dis(this->X(), this->Y());
-                    itk = u->tower;
+                myBlock *u = isin->block[(y + dy) * 15 + (x + dx)];
+                if (u->tower != nullptr) {
+                    if (u->tower->dis(this->X(), this->Y()) < mn) {
+                        mn = u->tower->dis(this->X(), this->Y());
+                        itk = u->tower;
+                    }
                 }
             }
         }
@@ -215,4 +209,9 @@ void myMonster::act() { //怪物行动逻辑
         if (dir == -1) this->setnowm(normf);
         cd = 0;
     }
+}
+
+
+myMonster::~myMonster() {
+    
 }

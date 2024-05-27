@@ -26,3 +26,7 @@ void myBlood::setpos() {
 void myBlood::act() {
 
 }
+
+myBlood::~myBlood() {
+    
+}

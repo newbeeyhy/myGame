@@ -27,6 +27,7 @@ public:
     int dis();
     void act();
     void update(int type);
+    ~myMonster();
     friend class GameWindow;
 };
 

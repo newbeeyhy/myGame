@@ -26,6 +26,7 @@ public:
     void act();
     int dis(int x, int y);
     void update(int type);
+    ~myTower();
 };
 
 #endif // MYTOWER_H
