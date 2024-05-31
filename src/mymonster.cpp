@@ -36,7 +36,8 @@ myMonster::myMonster(int id_, const QString &data, QWidget *parent): myCharacter
     this->show();
     //读取怪物行动路径
     s = file.readLine().toStdString();
-    n = s.length(); i = 0;
+    n = s.length();
+    i = 0;
     for (int j = 0; ; j++) {
         int x = 0;
         while (s[i] >= '0' && s[i] <= '9' && i < n) {
@@ -213,5 +214,5 @@ void myMonster::act() { //怪物行动逻辑
 
 
 myMonster::~myMonster() {
-    
+
 }

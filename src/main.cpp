@@ -15,23 +15,39 @@
 
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
-    int level = 0;
-    StartMenu s;
-    LevelSelectMenu l(&level);
-    QMediaPlayer *music = new QMediaPlayer;
-    music->setMedia(QUrl("qrc:/sound/recourse/BGM/Founding Stone.mp3"));
-    music->setVolume(30);
-    s.show();
-    music->play();
-    if (s.exec() == QDialog::Accepted) {
-        l.show();
+    while (1) {
+        int level = 0;
+        QString file = "void";
+        StartMenu s(&file);
+        LevelSelectMenu l(&level);
+        QMediaPlayer *music = new QMediaPlayer;
+        music->setMedia(QUrl("qrc:/sound/recourse/BGM/Founding Stone.mp3"));
+        music->setVolume(30);
+        s.show();
+        music->play();
+        if (s.exec() == QDialog::Accepted) {
+            if (file == "void") {
+                l.show();
+            }
+            else if (file == ""){
+                continue;
+            }
+            else {
+                music->stop();
+                GameWindow g(file, level);
+                g.show();
+                a.exec();
+                continue;
+            }
+        }
+        else break;
+        if (l.exec() == QDialog::Accepted) {
+            music->stop();
+            GameWindow g(file, level);
+            g.show();
+            a.exec();
+        }
+        else continue;
     }
-    else return 0;
-    if (l.exec() == QDialog::Accepted) {
-        music->stop();
-        GameWindow g(level);
-        g.show();
-        return a.exec();
-    }
-    else return 0;
+    return 0;
 }

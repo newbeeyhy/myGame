@@ -82,33 +82,11 @@ int myCharacter::Y() { //获取y坐标
 }
 
 myCharacter::~myCharacter() {
-    if (blood != nullptr) {
-        delete blood;
-        blood = nullptr;
-    }
-    nowm = nullptr;
-    if (norm != nullptr) {
-        delete norm;
-        norm = nullptr;
-    }
-    if (normf != nullptr) {
-        delete normf;
-        normf = nullptr;
-    }
-    if (attk != nullptr) {
-        delete attk;
-        attk = nullptr;
-    }
-    if (attkf != nullptr) {
-        delete attkf;
-        attkf = nullptr;
-    }
-    if (dead != nullptr) {
-        delete dead;
-        dead = nullptr;
-    }
-    if (deadf != nullptr) {
-        delete deadf;
-        deadf = nullptr;
-    }
+    blood = nullptr;
+    norm = nullptr;
+    normf = nullptr;
+    attk = nullptr;
+    attkf = nullptr;
+    dead = nullptr;
+    deadf = nullptr;
 }

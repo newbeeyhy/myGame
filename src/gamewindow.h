@@ -4,6 +4,7 @@
 #include <QMouseEvent>
 #include <QMediaPlayer>
 #include <utility>
+#include <QString>
 #include <vector>
 #include <string>
 #include <QLabel>
@@ -22,14 +23,14 @@ private:
     QMediaPlayer *bgm = nullptr;
     
 public:
-    explicit GameWindow(int level, QWidget *parent = nullptr);
+    explicit GameWindow(QString file, int level_, QWidget *parent = nullptr);
     ~GameWindow();
 
 public slots:
     void on_pushButtonstart_clicked();
     void on_pushButtonpause_clicked();
     void on_pushButtonsave_clicked();
-    void on_pushButtonload_clicked();
+    void on_pushButtonexit_clicked();
     void onTimer();
     void Start();
     void Stop();
@@ -40,6 +41,7 @@ protected:
     void mouseMoveEvent(QMouseEvent *e);
 
 private:
+    int level = 0;
     int cost = 0;
     int hp = 5;
     int buffnum[8] = {1, 1, 1, 1, 1, 1, 1, 1};
@@ -48,7 +50,8 @@ private:
 
     Ui::GameWindow *ui;
 
-    void InitGameWindow(int level);
+    void InitGameWindow(int level_);
+    void LoadGameWindow(QString file);
 
     QTimer *timer = nullptr;
     int time = 0;
@@ -62,9 +65,9 @@ private:
 
     QString blockname[9];
 
-    size_t pos = 0;
-    int alivemonster = 0;
-    std::vector<std::pair<int, QString>> monsterque;
+    int pos = 0;
+    int alivemonster = 0, alivetower = 0;
+    QVector<std::pair<int, QString>> monsterque;
     QVector<std::pair<std::pair<int, int>, class myTower*>> towerque;
 
     QVector<class myBlock*> block;

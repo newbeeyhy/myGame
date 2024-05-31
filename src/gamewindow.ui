@@ -497,7 +497,7 @@
     <string>save</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButtonload">
+  <widget class="QPushButton" name="pushButtonexit">
    <property name="geometry">
     <rect>
      <x>310</x>
@@ -507,7 +507,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>load</string>
+    <string>exit</string>
    </property>
   </widget>
  </widget>

@@ -7,14 +7,17 @@
 #include <QMessageBox>
 #include <QMovie>
 #include <QRandomGenerator>
+#include <QFileDialog>
 
-GameWindow::GameWindow(int level, QWidget *parent): QWidget(parent), ui(new Ui::GameWindow) { //构造函数
+GameWindow::GameWindow(QString filepath, int level_, QWidget *parent): QWidget(parent), ui(new Ui::GameWindow) { //构造函数
     ui->setupUi(this);
-    InitGameWindow(level);
+    if (level_ != 0) InitGameWindow(level_);
+    else LoadGameWindow(filepath);
 }
 
-void GameWindow::InitGameWindow(int level) { //初始化窗口
+void GameWindow::InitGameWindow(int level_) { //初始化窗口
     // 载入背景音乐
+    level = level_;
     bgm = new QMediaPlayer(this);
     bgm->setMedia(QUrl("qrc:/sound/recourse/BGM/shenchizhiying.mp3"));
     bgm->setVolume(30);
@@ -23,7 +26,7 @@ void GameWindow::InitGameWindow(int level) { //初始化窗口
     connect(timer, &QTimer::timeout, this, &GameWindow::onTimer);
     // 加载关卡文件
     this->setWindowTitle(QString("LEVEL") + QString::number(level));
-    QFile file(QString(":/data/level/") + QString::number(level) + QString("/map.txt"));
+    QFile file(QString(":/data/level/") + QString::number(level) + QString("/map.mp"));
     file.open(QFile::ReadOnly);
     // 初始化地块
     for (int i = 0; i < 9; i++) {
@@ -70,7 +73,7 @@ void GameWindow::InitGameWindow(int level) { //初始化窗口
         i++;
     }
     for (int j = 0; j < n; j++) {
-        s = file.readLine().chopped(2).toStdString();
+        s = file.readLine().toStdString();
         int x = 0;
         i = 0;
         while (s[i] >= '0' && s[i] <= '9' && i < s.length()) {
@@ -116,36 +119,452 @@ void GameWindow::InitGameWindow(int level) { //初始化窗口
     ui->kuaigongn->setText("X " + QString::number(buffnum[7]));
     imagbuff[7] = ui->kuaigong;
     numbuff[7] = ui->kuaigongn;
-    // 启动！
+    //启动！
     on_pushButtonstart_clicked();
 }
 
-void GameWindow::on_pushButtonstart_clicked() { // 开始按钮
+void GameWindow::LoadGameWindow(QString filepath) {
+    //载入背景音乐
+    bgm = new QMediaPlayer(this);
+    bgm->setMedia(QUrl("qrc:/sound/recourse/BGM/shenchizhiying.mp3"));
+    bgm->setVolume(30);
+    //初始化计时器
+    timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &GameWindow::onTimer);
+    //加载存档文件
+    QFile file(filepath);
+    file.open(QFile::ReadOnly);
+    //加载关卡编号
+    std::string s = file.readLine().toStdString();
+    size_t l = 0;
+    int tmp = 0;
+    while (s[l] >= '0' && s[l] <= '9' && l < s.length()) {
+        level = level * 10 + s[l] - '0';
+        l++;
+    }
+    this->setWindowTitle(QString("LEVEL") + QString::number(level));
+    //加载费用
+    s = file.readLine().toStdString();
+    l = tmp = 0;
+    while (s[l] >= '0' && s[l] <= '9' && l < s.length()) {
+        tmp = tmp * 10 + s[l] - '0';
+        l++;
+    }
+    cost = tmp;
+    ui->labelcostnum->setText(QString::number(cost));
+    //加载生命值
+    s = file.readLine().toStdString();
+    l = tmp = 0;
+    while (s[l] >= '0' && s[l] <= '9' && l < s.length()) {
+        tmp = tmp * 10 + s[l] - '0';
+        l++;
+    }
+    hp = tmp;
+    ui->labelhpnum->setText(QString::number(hp));
+    //加载时间
+    s = file.readLine().toStdString();
+    l = tmp = 0;
+    while (s[l] >= '0' && s[l] <= '9' && l < s.length()) {
+        tmp = tmp * 10 + s[l] - '0';
+        l++;
+    }
+    time = tmp;
+    //加载怪物全局buff
+    s = file.readLine().toStdString();
+    l = 0;
+    for (int i = 0; i < 2; i++) {
+        tmp = 0;
+        while (s[l] >= '0' && s[l] <= '9' && l < s.length()) {
+            tmp = tmp * 10 + s[l] - '0';
+            l++;
+        }
+        buffque[i] = tmp;
+        l++;
+    }
+    //加载我方buff数量
+    s = file.readLine().toStdString();
+    l = 0;
+    for (int i = 0; i < 8; i++) {
+        tmp = 0;
+        while (s[l] >= '0' && s[l] <= '9' && l < s.length()) {
+            tmp = tmp * 10 + s[l] - '0';
+            l++;
+        }
+        buffnum[i] = tmp;
+        l++;
+    }
+    //初始化地块
+    QFile file_(QString(":/data/level/") + QString::number(level) + QString("/map.mp"));
+    file_.open(QFile::ReadOnly);
+    for (int i = 0; i < 9; i++) {
+        blockname[i] = QString::fromUtf8(file_.readLine()).chopped(2);
+    }
+    for (int i = 0; i < 9; i++) {
+        s = file_.readLine().toStdString();
+        for (int j = 0; j < 15; j++) {
+            int k = s[size_t(j)] - '1';
+            if (k == 4) block.push_back(new myBlock(1, blockname[k], this));
+            else block.push_back(new myBlock(2, blockname[k], this));
+            block[i * 15 + j]->setGeometry(j * 100, i * 100, 100, 100);
+            block[i * 15 + j]->setScaledContents(true);
+            block[i * 15 + j]->lower();
+            block[i * 15 + j]->play();
+        }
+    }
+    file_.close();
+    // 加入icon
+    tower1 = new QLabel(this);
+    tower1->setMovie(new QMovie(tr(":/image/recourse/tower/BloodMoonTower.gif")));
+    tower1->setGeometry(1513, 20, 75, 93);
+    tower1->setScaledContents(true);
+    tower1->lower();
+    tower2 = new QLabel(this);
+    tower2->setMovie(new QMovie(tr(":/image/recourse/spirit/Idle.gif")));
+    tower2->setGeometry(1450, 80, 200, 200);
+    tower2->setScaledContents(true);
+    tower2->lower();
+    // 设置buff图标
+    ui->kuangbao->setPixmap(QPixmap(tr(":/image/recourse/buff/kuangbao.png")));
+    ui->kuangbao->setScaledContents(true);
+    ui->kuangbaon->setText("X " + QString::number(buffnum[1]));
+    imagbuff[1] = ui->kuangbao;
+    numbuff[1] = ui->kuangbaon;
+    ui->bingdong->setPixmap(QPixmap(tr(":/image/recourse/buff/bingdong.png")));
+    ui->bingdong->setScaledContents(true);
+    ui->bingdongn->setText("X " + QString::number(buffnum[2]));
+    imagbuff[2] = ui->bingdong;
+    numbuff[2] = ui->bingdongn;
+    ui->fangxie->setPixmap(QPixmap(tr(":/image/recourse/buff/fangxie.png")));
+    ui->fangxie->setScaledContents(true);
+    ui->fangxien->setText("X " + QString::number(buffnum[3]));
+    imagbuff[3] = ui->fangxie;
+    numbuff[3] = ui->fangxien;
+    ui->qungong->setPixmap(QPixmap(tr(":/image/recourse/buff/qungong.png")));
+    ui->qungong->setScaledContents(true);
+    ui->qungongn->setText("X " + QString::number(buffnum[4]));
+    imagbuff[4] = ui->qungong;
+    numbuff[4] = ui->qungongn;
+    ui->jiyun->setPixmap(QPixmap(tr(":/image/recourse/buff/jiyun.png")));
+    ui->jiyun->setScaledContents(true);
+    ui->jiyunn->setText("X " + QString::number(buffnum[5]));
+    imagbuff[5] = ui->jiyun;
+    numbuff[5] = ui->jiyunn;
+    ui->yingyan->setPixmap(QPixmap(tr(":/image/recourse/buff/yingyan.png")));
+    ui->yingyan->setScaledContents(true);
+    ui->yingyann->setText("X " + QString::number(buffnum[6]));
+    imagbuff[6] = ui->yingyan;
+    numbuff[6] = ui->yingyann;
+    ui->kuaigong->setPixmap(QPixmap(tr(":/image/recourse/buff/kuaigong.png")));
+    ui->kuaigong->setScaledContents(true);
+    ui->kuaigongn->setText("X " + QString::number(buffnum[7]));
+    imagbuff[7] = ui->kuaigong;
+    numbuff[7] = ui->kuaigongn;
+    //加载怪物序列
+    s = file.readLine().toStdString();
+    l = tmp = 0;
+    while (s[l] >= '0' && s[l] <= '9' && l < s.length()) {
+        tmp = tmp * 10 + s[l] - '0';
+        l++;
+    }
+    int n = tmp;
+    s = file.readLine().toStdString();
+    l = tmp = 0;
+    while (s[l] >= '0' && s[l] <= '9' && l < s.length()) {
+        tmp = tmp * 10 + s[l] - '0';
+        l++;
+    }
+    pos = tmp;
+    for (int i = 0; i < n; i++) {
+        s = file.readLine().toStdString();
+        l = tmp = 0;
+        while (s[l] >= '0' && s[l] <= '9' && l < s.length()) {
+            tmp = tmp * 10 + s[l] - '0';
+            l++;
+        }
+        QString ss = QString::fromUtf8(file.readLine()).chopped(1);
+        monsterque.push_back(std::make_pair(tmp, ss));
+    }
+    //加载存活怪物
+    s = file.readLine().toStdString();
+    l = tmp = 0;
+    while (s[l] >= '0' && s[l] <= '9' && l < s.length()) {
+        tmp = tmp * 10 + s[l] - '0';
+        l++;
+    }
+    alivemonster = tmp;
+    for (int i = 0; i < alivemonster; i++) {
+        QString ss = QString::fromUtf8(file.readLine()).chopped(1);
+        s = file.readLine().toStdString();
+        l = tmp = 0;
+        while (s[l] >= '0' && s[l] <= '9' && l < s.length()) {
+            tmp = tmp * 10 + s[l] - '0';
+            l++;
+        }
+        monster.push_back(new myMonster(tmp, ss, this));
+        //加载怪物路径位置
+        s = file.readLine().toStdString();
+        l = tmp = 0;
+        while (s[l] >= '0' && s[l] <= '9' && l < s.length()) {
+            tmp = tmp * 10 + s[l] - '0';
+            l++;
+        }
+        monster.back()->pos = size_t(tmp);
+        //加载怪物属性
+        s = file.readLine().toStdString();
+        l = 0;
+        for (int j = 0; j < 11; j++) {
+            tmp = 0;
+            while (s[l] >= '0' && s[l] <= '9' && l < s.length()) {
+                tmp = tmp * 10 + s[l] - '0';
+                l++;
+            }
+            switch (j) {
+                case 0: monster.back()->pro.maxHP = tmp; break;
+                case 1: monster.back()->pro.HP = tmp; break;
+                case 2: monster.back()->pro.TATK = tmp; break;
+                case 3: monster.back()->pro.PATK = tmp; break;
+                case 4: monster.back()->pro.MATK = tmp; break;
+                case 5: monster.back()->pro.PDEF = tmp; break;
+                case 6: monster.back()->pro.MDEF = tmp; break;
+                case 7: monster.back()->pro.SPD = tmp; break;
+                case 8: monster.back()->pro.ATKF = tmp; break;
+                case 9: monster.back()->pro.VAL = tmp; break;
+                case 10: monster.back()->pro.WEI = tmp; break;
+            }
+            l++;
+        }
+        monster.back()->behit(0, 0);
+        //加载debuff
+        s = file.readLine().toStdString();
+        l = 0;
+        for (int j = 0; j < 4; j++) {
+            tmp = 0;
+            while (s[l] >= '0' && s[l] <= '9' && l < s.length()) {
+                tmp = tmp * 10 + s[l] - '0';
+                l++;
+            }
+            switch (j) {
+                case 0: monster.back()->fs = tmp; break;
+                case 1: monster.back()->td = tmp; break;
+                case 2: monster.back()->wy = tmp; break;
+                case 3: monster.back()->yn = tmp; break;
+            }
+            l++;
+        }
+        //加载buff
+        s = file.readLine().toStdString();
+        l = 0;
+        for (int j = 0; j < 2; j++) {
+            tmp = 0;
+            while (s[l] >= '0' && s[l] <= '9' && l < s.length()) {
+                tmp = tmp * 10 + s[l] - '0';
+                l++;
+            }
+            monster.back()->buff[j] = tmp;
+            l++;
+        }
+        //加载cd
+        s = file.readLine().toStdString();
+        l = tmp = 0;
+        while (s[l] >= '0' && s[l] <= '9' && l < s.length()) {
+            tmp = tmp * 10 + s[l] - '0';
+            l++;
+        }
+        monster.back()->cd = tmp;
+        //加载坐标
+        s = file.readLine().toStdString();
+        l = 0;
+        int x = 0, y = 0;
+        for (int j = 0; j < 2; j++) {
+            tmp = 0;
+            while (s[l] >= '0' && s[l] <= '9' && l < s.length()) {
+                tmp = tmp * 10 + s[l] - '0';
+                l++;
+            }
+            if (j == 0) x = tmp;
+            else y = tmp;
+            l++;
+        }
+        monster.back()->Move(x - monster.back()->width() / 2, y - monster.back()->height() / 2);
+        monster.back()->update(monster.back()->buff[0]);
+        monster.back()->update(monster.back()->buff[1]);
+        monster.back()->raise();
+    }
+    //加载存活防御塔
+    s = file.readLine().toStdString();
+    l = tmp = 0;
+    while (s[l] >= '0' && s[l] <= '9' && l < s.length()) {
+        tmp = tmp * 10 + s[l] - '0';
+        l++;
+    }
+    alivetower = tmp;
+    for (int i = 0; i < alivetower; i++) {
+        QString ss = QString::fromUtf8(file.readLine()).chopped(1);
+        tower.push_back(new myTower(100, 100, ss, this));
+        //加载防御塔属性
+        s = file.readLine().toStdString();
+        l = 0;
+        for (int j = 0; j < 11; j++) {
+            tmp = 0;
+            while (s[l] >= '0' && s[l] <= '9' && l < s.length()) {
+                tmp = tmp * 10 + s[l] - '0';
+                l++;
+            }
+            switch (j) {
+                case 0: tower.back()->pro.maxHP = tmp; break;
+                case 1: tower.back()->pro.HP = tmp; break;
+                case 2: tower.back()->pro.TATK = tmp; break;
+                case 3: tower.back()->pro.PATK = tmp; break;
+                case 4: tower.back()->pro.MATK = tmp; break;
+                case 5: tower.back()->pro.PDEF = tmp; break;
+                case 6: tower.back()->pro.MDEF = tmp; break;
+                case 7: tower.back()->pro.SPD = tmp; break;
+                case 8: tower.back()->pro.ATKF = tmp; break;
+                case 9: tower.back()->pro.VAL = tmp; break;
+                case 10: tower.back()->pro.WEI = tmp; break;
+            }
+            l++;
+        }
+        tower.back()->behit(0, 0);
+        //加载buff
+        s = file.readLine().toStdString();
+        l = 0;
+        for (int j = 0; j < 2; j++) {
+            tmp = 0;
+            while (s[l] >= '0' && s[l] <= '9' && l < s.length()) {
+                tmp = tmp * 10 + s[l] - '0';
+                l++;
+            }
+            tower.back()->buff[j] = tmp;
+            l++;
+        }
+        //加载坐标
+        s = file.readLine().toStdString();
+        l = 0;
+        int x = 0, y = 0;
+        for (int j = 0; j < 2; j++) {
+            tmp = 0;
+            while (s[l] >= '0' && s[l] <= '9' && l < s.length()) {
+                tmp = tmp * 10 + s[l] - '0';
+                l++;
+            }
+            if (j == 0) x = tmp;
+            else y = tmp;
+            l++;
+        }
+        tower.back()->Move(x - tower.back()->width() / 2, y - tower.back()->height() / 2);
+        tower.back()->update(tower.back()->buff[0]);
+        tower.back()->update(tower.back()->buff[1]);
+    }
+    //启动！
+    on_pushButtonstart_clicked();
+}
+
+void GameWindow::on_pushButtonstart_clicked() { //开始按钮
     Start();
     ui->pushButtonstart->setEnabled(false);
     ui->pushButtonpause->setEnabled(true);
     ui->pushButtonsave->setEnabled(false);
-    ui->pushButtonload->setEnabled(false);
+    ui->pushButtonexit->setEnabled(false);
 }
 
-void GameWindow::on_pushButtonpause_clicked() { // 暂停按钮
+void GameWindow::on_pushButtonpause_clicked() { //暂停按钮
     Stop();
     ui->pushButtonstart->setEnabled(true);
     ui->pushButtonpause->setEnabled(false);
     ui->pushButtonsave->setEnabled(true);
-    ui->pushButtonload->setEnabled(true);
+    ui->pushButtonexit->setEnabled(true);
 }
 
 void GameWindow::on_pushButtonsave_clicked() {
-    
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Game"), "", tr("Game Files (*.game)"));
+    if (!fileName.isEmpty()) {
+        QFile file(fileName);
+        if (file.open(QFile::WriteOnly)) {
+            // Save game data here
+            file.write(QString::number(level).toUtf8() + "\n");                         //关卡
+            file.write(QString::number(cost).toUtf8() + "\n");                          //费用
+            file.write(QString::number(hp).toUtf8() + "\n");                            //生命值
+            file.write(QString::number(time).toUtf8() + "\n");                          //时间
+            file.write(QString::number(buffque[0]).toUtf8() + " ");
+            file.write(QString::number(buffque[1]).toUtf8() + "\n");                    //怪物全局buff
+            for (int i = 0; i < 8; i++) {
+                file.write(QString::number(buffnum[i]).toUtf8());                       //我方buff数量
+                if (i < 7) file.write(" ");
+                else file.write("\n");
+            }
+            int n = monsterque.size();
+            file.write(QString::number(n).toUtf8() + "\n");                             //怪物序列长度
+            file.write(QString::number(pos).toUtf8() + "\n");                           //怪物序列位置
+            for (int i = 0; i < n; i++) {
+                file.write(QString::number(monsterque[i].first).toUtf8() + "\n");        //怪物出现时间
+                file.write(monsterque[i].second.toUtf8() + "\n");                       //怪物文件
+            }
+            n = monster.size();
+            file.write(QString::number(alivemonster).toUtf8() + "\n");                  //存活怪物数
+            for (int i = 0; i < n; i++) {
+                if (monster[i] == nullptr || monster[i]->alive == false) continue;
+                file.write(monsterque[monster[i]->id].second.toUtf8() + "\n");          //怪物文件
+                file.write(QString::number(monster[i]->id).toUtf8() + "\n");            //怪物id
+                file.write(QString::number(monster[i]->pos).toUtf8() + "\n");           //怪物路径位置
+                file.write(QString::number(monster[i]->pro.maxHP).toUtf8() + " ");
+                file.write(QString::number(monster[i]->pro.HP).toUtf8() + " ");
+                file.write(QString::number(monster[i]->pro.TATK).toUtf8() + " ");
+                file.write(QString::number(monster[i]->pro.PATK).toUtf8() + " ");
+                file.write(QString::number(monster[i]->pro.MATK).toUtf8() + " ");
+                file.write(QString::number(monster[i]->pro.PDEF).toUtf8() + " ");
+                file.write(QString::number(monster[i]->pro.MDEF).toUtf8() + " ");
+                file.write(QString::number(monster[i]->pro.SPD).toUtf8() + " ");
+                file.write(QString::number(monster[i]->pro.ATKF).toUtf8() + " ");
+                file.write(QString::number(monster[i]->pro.VAL).toUtf8() + " ");
+                file.write(QString::number(monster[i]->pro.WEI).toUtf8() + "\n");       //怪物属性
+                file.write(QString::number(monster[i]->fs).toUtf8() + " ");
+                file.write(QString::number(monster[i]->td).toUtf8() + " ");
+                file.write(QString::number(monster[i]->wy).toUtf8() + " ");
+                file.write(QString::number(monster[i]->yn).toUtf8() + "\n");            //debuff
+                file.write(QString::number(monster[i]->buff[0]).toUtf8() + " ");
+                file.write(QString::number(monster[i]->buff[1]).toUtf8() + "\n");       //buff
+                file.write(QString::number(monster[i]->cd).toUtf8() + "\n");            //cd
+                file.write(QString::number(monster[i]->X()).toUtf8() + " ");
+                file.write(QString::number(monster[i]->Y()).toUtf8() + "\n");           //怪物坐标
+            }
+            n = tower.size();
+            file.write(QString::number(alivetower).toUtf8() + "\n");                    //存活防御塔数
+            for (int i = 0; i < n; i++) {
+                if (tower[i] == nullptr || tower[i]->alive == false) continue;
+                if (tower[i]->name == "BloodMoonTower") {
+                    file.write(":/data/level/BloodMoonTower.twr\n");
+                }
+                if (tower[i]->name == "Spirit") {
+                    file.write(":/data/level/Spirit.twr\n");
+                }                                                                       //防御塔文件
+                file.write(QString::number(tower[i]->pro.maxHP).toUtf8() + " ");
+                file.write(QString::number(tower[i]->pro.HP).toUtf8() + " ");
+                file.write(QString::number(tower[i]->pro.TATK).toUtf8() + " ");
+                file.write(QString::number(tower[i]->pro.PATK).toUtf8() + " ");
+                file.write(QString::number(tower[i]->pro.MATK).toUtf8() + " ");
+                file.write(QString::number(tower[i]->pro.PDEF).toUtf8() + " ");
+                file.write(QString::number(tower[i]->pro.MDEF).toUtf8() + " ");
+                file.write(QString::number(tower[i]->pro.SPD).toUtf8() + " ");
+                file.write(QString::number(tower[i]->pro.ATKF).toUtf8() + " ");
+                file.write(QString::number(tower[i]->pro.VAL).toUtf8() + " ");
+                file.write(QString::number(tower[i]->pro.WEI).toUtf8() + "\n");         //防御塔属性
+                file.write(QString::number(tower[i]->buff[0]).toUtf8() + " ");
+                file.write(QString::number(tower[i]->buff[1]).toUtf8() + "\n");         //buff
+                file.write(QString::number(tower[i]->X()).toUtf8() + " ");
+                file.write(QString::number(tower[i]->Y()).toUtf8() + "\n");             //防御塔坐标
+            }
+            file.close();
+        }
+    }
 }
 
-void GameWindow::on_pushButtonload_clicked() {
-
+void GameWindow::on_pushButtonexit_clicked() {
+    this->close();
 }
 
 void GameWindow::Start() { //所有单位开始运动
-	timer->start(20); 
+	timer->start(20);
     int n;
     n = block.size();
     for (int i = 0; i < n; i++) {
@@ -196,6 +615,8 @@ void GameWindow::AddMonster() { //根据载入的怪物序列按时间顺序生�
         monster.back()->play();
         monster.back()->update(buffque[0]);
         monster.back()->update(buffque[1]);
+        monster.back()->buff[0] = buffque[0];
+        monster.back()->buff[1] = buffque[1];
         pos++;
     }
 }
@@ -213,6 +634,7 @@ void GameWindow::AddTower() { //根据玩家的摆放操作将生成防御塔
         ui->labelcostnum->setText(QString::number(cost));
         p->play();
         tower.push_back(p);
+        alivetower++;
     }
     towerque.clear();
 }
@@ -260,6 +682,7 @@ void GameWindow::RemoveDeath() { //移除死亡单位
                 }
             }
             tower[i]->death();
+            alivetower--;
         }
     }
 }
@@ -294,11 +717,11 @@ void GameWindow::Check() { //检测和更新游戏状态
 void GameWindow::mousePressEvent(QMouseEvent *e) { //响应鼠标点击事件，根据点击的防御塔图标生成防御塔
     int x = e->x(), y = e->y();
     if (x >= 1500 && x <= 1600 && y >= 20 && y < 120) {
-        newtower = new myTower(x - 37, y - 46, tr(":/data/level/BloodMoonTower.txt"), this);
+        newtower = new myTower(x - 37, y - 46, tr(":/data/level/BloodMoonTower.twr"), this);
         newtower->play();
     }
     if (x >= 1500 && x <= 1600 && y >= 120 && y < 220) {
-        newtower = new myTower(x - 100, y - 100, tr(":/data/level/Spirit.txt"), this);
+        newtower = new myTower(x - 100, y - 100, tr(":/data/level/Spirit.twr"), this);
         newtower->play();
     }
     if (x >= 1620 && x <= 1680 && y >= 20 && y <= 100) {

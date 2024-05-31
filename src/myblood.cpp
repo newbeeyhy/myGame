@@ -28,5 +28,5 @@ void myBlood::act() {
 }
 
 myBlood::~myBlood() {
-    
+
 }

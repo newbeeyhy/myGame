@@ -1,5 +1,6 @@
 #include "levelselectmenu.h"
 #include "ui_levelselectmenu.h"
+#include <QDebug>
 
 LevelSelectMenu::LevelSelectMenu(int *p, QDialog *parent): QDialog(parent), ui(new Ui::LevelSelectMenu) {
     level = p;
