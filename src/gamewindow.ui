@@ -510,6 +510,32 @@
     <string>exit</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="pushButtonspeed2">
+   <property name="geometry">
+    <rect>
+     <x>1390</x>
+     <y>910</y>
+     <width>93</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&gt;&gt;</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButtonspeed1">
+   <property name="geometry">
+    <rect>
+     <x>1290</x>
+     <y>910</y>
+     <width>93</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&gt;</string>
+   </property>
+  </widget>
  </widget>
  <resources>
   <include location="resource.qrc"/>

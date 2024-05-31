@@ -31,6 +31,8 @@ public slots:
     void on_pushButtonpause_clicked();
     void on_pushButtonsave_clicked();
     void on_pushButtonexit_clicked();
+    void on_pushButtonspeed1_clicked();
+    void on_pushButtonspeed2_clicked();
     void onTimer();
     void Start();
     void Stop();
@@ -41,6 +43,7 @@ protected:
     void mouseMoveEvent(QMouseEvent *e);
 
 private:
+    int speed = 20;
     int level = 0;
     int cost = 0;
     int hp = 5;
@@ -80,6 +83,7 @@ private:
     void AddMonster();
     void AddTower();
     void Check();
+    void SetSpeed(int x);
 
     friend class myMonster;
     friend class myTower;

@@ -120,6 +120,8 @@ void GameWindow::InitGameWindow(int level_) { //初始化窗口
     imagbuff[7] = ui->kuaigong;
     numbuff[7] = ui->kuaigongn;
     //启动！
+    ui->pushButtonspeed1->setEnabled(false);
+    ui->pushButtonspeed2->setEnabled(true);
     on_pushButtonstart_clicked();
 }
 
@@ -457,6 +459,8 @@ void GameWindow::LoadGameWindow(QString filepath) {
         tower.back()->update(tower.back()->buff[1]);
     }
     //启动！
+    ui->pushButtonspeed1->setEnabled(false);
+    ui->pushButtonspeed2->setEnabled(true);
     on_pushButtonstart_clicked();
 }
 
@@ -563,8 +567,44 @@ void GameWindow::on_pushButtonexit_clicked() {
     this->close();
 }
 
+void GameWindow::on_pushButtonspeed1_clicked() {
+    SetSpeed(20);
+    ui->pushButtonspeed1->setEnabled(false);
+    ui->pushButtonspeed2->setEnabled(true);
+}
+
+void GameWindow::on_pushButtonspeed2_clicked() {
+    SetSpeed(10);
+    ui->pushButtonspeed1->setEnabled(true);
+    ui->pushButtonspeed2->setEnabled(false);
+}
+
+void GameWindow::SetSpeed(int x) {
+    timer->setInterval(x);
+    int n;
+    n = monster.size();
+    for (int i = 0; i < n; i++) {
+        if (monster[i]->norm != nullptr) monster[i]->norm->setSpeed(monster[i]->norm->speed() * speed / x);
+        if (monster[i]->normf != nullptr) monster[i]->normf->setSpeed(monster[i]->normf->speed() * speed / x);
+        if (monster[i]->attk != nullptr) monster[i]->attk->setSpeed(monster[i]->attk->speed() * speed / x);
+        if (monster[i]->attkf != nullptr) monster[i]->attkf->setSpeed(monster[i]->attkf->speed() * speed / x);
+        if (monster[i]->dead != nullptr) monster[i]->dead->setSpeed(monster[i]->dead->speed() * speed / x);
+        if (monster[i]->deadf != nullptr) monster[i]->deadf->setSpeed(monster[i]->deadf->speed() * speed / x);
+    }
+    n = tower.size();
+    for (int i = 0; i < n; i++) {
+        if (tower[i]->norm != nullptr) tower[i]->norm->setSpeed(tower[i]->norm->speed() * speed / x);
+        if (tower[i]->normf != nullptr) tower[i]->normf->setSpeed(tower[i]->normf->speed() * speed / x);
+        if (tower[i]->attk != nullptr) tower[i]->attk->setSpeed(tower[i]->attk->speed() * speed / x);
+        if (tower[i]->attkf != nullptr) tower[i]->attkf->setSpeed(tower[i]->attkf->speed() * speed / x);
+        if (tower[i]->dead != nullptr) tower[i]->dead->setSpeed(tower[i]->dead->speed() * speed / x);
+        if (tower[i]->deadf != nullptr) tower[i]->deadf->setSpeed(tower[i]->deadf->speed() * speed / x);
+    }
+    speed = x;
+}
+
 void GameWindow::Start() { //所有单位开始运动
-	timer->start(20);
+	timer->start(speed);
     int n;
     n = block.size();
     for (int i = 0; i < n; i++) {
@@ -627,6 +667,7 @@ void GameWindow::AddTower() { //根据玩家的摆放操作将生成防御塔
         myTower *p = towerque[i].second;
         int bx = towerque[i].first.first, by = towerque[i].first.second;
         if (block[by * 15 + bx]->type != p->type || block[by * 15 + bx]->tower != nullptr) {
+            p->blood->clear();
             delete p;
             continue;
         }
@@ -786,6 +827,7 @@ void GameWindow::mouseReleaseEvent(QMouseEvent *e) { //响应鼠标释放事件�
     if (newtower != nullptr) {
         int bx = e->x() / 100, by = e->y() / 100;
         if (bx < 0 || bx >= 15 || by < 0 || by >= 9 || newtower->pro.VAL > cost) {
+            newtower->blood->clear();
             delete newtower;
             newtower = nullptr;
             return;
