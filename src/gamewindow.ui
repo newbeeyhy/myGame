@@ -26,8 +26,13 @@
      <height>28</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>JetBrains Mono</family>
+    </font>
+   </property>
    <property name="text">
-    <string>start</string>
+    <string>|&gt;</string>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButtonpause">
@@ -39,8 +44,13 @@
      <height>28</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>JetBrains Mono</family>
+    </font>
+   </property>
    <property name="text">
-    <string>pause</string>
+    <string>||</string>
    </property>
   </widget>
   <widget class="QLabel" name="labelcostnum">
@@ -487,7 +497,7 @@
   <widget class="QPushButton" name="pushButtonsave">
    <property name="geometry">
     <rect>
-     <x>210</x>
+     <x>1300</x>
      <y>910</y>
      <width>93</width>
      <height>28</height>
@@ -500,7 +510,7 @@
   <widget class="QPushButton" name="pushButtonexit">
    <property name="geometry">
     <rect>
-     <x>310</x>
+     <x>1400</x>
      <y>910</y>
      <width>93</width>
      <height>28</height>
@@ -513,11 +523,16 @@
   <widget class="QPushButton" name="pushButtonspeed2">
    <property name="geometry">
     <rect>
-     <x>1390</x>
+     <x>310</x>
      <y>910</y>
      <width>93</width>
      <height>28</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>JetBrains Mono</family>
+    </font>
    </property>
    <property name="text">
     <string>&gt;&gt;</string>
@@ -526,11 +541,16 @@
   <widget class="QPushButton" name="pushButtonspeed1">
    <property name="geometry">
     <rect>
-     <x>1290</x>
+     <x>210</x>
      <y>910</y>
      <width>93</width>
      <height>28</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>JetBrains Mono</family>
+    </font>
    </property>
    <property name="text">
     <string>&gt;</string>
