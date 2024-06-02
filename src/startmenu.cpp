@@ -6,7 +6,7 @@
 StartMenu::StartMenu(QString *file_, QDialog *parent): QDialog(parent), ui(new Ui::StartMenu) {
     file = file_;
     ui->setupUi(this);
-    this->setWindowTitle("Start Menu");
+    this->setWindowTitle("Main Menu");
 }
 
 StartMenu::~StartMenu() {

@@ -5,6 +5,7 @@
 LevelSelectMenu::LevelSelectMenu(int *p, QDialog *parent): QDialog(parent), ui(new Ui::LevelSelectMenu) {
     level = p;
     ui->setupUi(this);
+    this->setWindowTitle("Select Level");
 }
 
 LevelSelectMenu::~LevelSelectMenu() {
