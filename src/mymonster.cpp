@@ -117,6 +117,28 @@ void myMonster::update(int type) {
 
 void myMonster::act() { //怪物行动逻辑
     if (alive == false || beset == false) return;
+    if (bd) {
+        bd--;
+        if (bd == 0) {
+            pro.SPD *= 2;
+            pro.ATKF /= 2;
+            attk->setSpeed(attk->speed() * 2);
+            attkf->setSpeed(attkf->speed() * 2);
+            norm->setSpeed(norm->speed() * 2);
+            normf->setSpeed(normf->speed() * 2);
+        }
+    }
+    if (lx) {
+        lx--;
+        behit(1, 3);
+    }
+    if (xy) {
+        xy--;
+        if (xy == 0) {
+            play();
+        }
+        return;
+    }
     //更新所在地块
     int bx = this->X() / 100, by = this->Y() / 100;
     if (belong != nullptr) belong->monster.remove(id);

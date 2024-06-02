@@ -339,17 +339,16 @@ void GameWindow::LoadGameWindow(QString filepath) {
         //加载debuff
         s = file.readLine().toStdString();
         l = 0;
-        for (int j = 0; j < 4; j++) {
+        for (int j = 0; j < 3; j++) {
             tmp = 0;
             while (s[l] >= '0' && s[l] <= '9' && l < s.length()) {
                 tmp = tmp * 10 + s[l] - '0';
                 l++;
             }
             switch (j) {
-                case 0: monster.back()->fs = tmp; break;
-                case 1: monster.back()->td = tmp; break;
-                case 2: monster.back()->wy = tmp; break;
-                case 3: monster.back()->yn = tmp; break;
+                case 0: monster.back()->bd = tmp; break;
+                case 1: monster.back()->lx = tmp; break;
+                case 2: monster.back()->xy = tmp; break;
             }
             l++;
         }
@@ -522,10 +521,9 @@ void GameWindow::on_pushButtonsave_clicked() {
                 file.write(QString::number(monster[i]->pro.ATKF).toUtf8() + " ");
                 file.write(QString::number(monster[i]->pro.VAL).toUtf8() + " ");
                 file.write(QString::number(monster[i]->pro.WEI).toUtf8() + "\n");       //怪物属性
-                file.write(QString::number(monster[i]->fs).toUtf8() + " ");
-                file.write(QString::number(monster[i]->td).toUtf8() + " ");
-                file.write(QString::number(monster[i]->wy).toUtf8() + " ");
-                file.write(QString::number(monster[i]->yn).toUtf8() + "\n");            //debuff
+                file.write(QString::number(monster[i]->bd).toUtf8() + " ");
+                file.write(QString::number(monster[i]->lx).toUtf8() + " ");
+                file.write(QString::number(monster[i]->xy).toUtf8() + "\n");            //debuff
                 file.write(QString::number(monster[i]->buff[0]).toUtf8() + " ");
                 file.write(QString::number(monster[i]->buff[1]).toUtf8() + "\n");       //buff
                 file.write(QString::number(monster[i]->cd).toUtf8() + "\n");            //cd

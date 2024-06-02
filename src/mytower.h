@@ -27,6 +27,7 @@ public:
     int dis(int x, int y);
     void update(int type);
     ~myTower();
+    friend class myMonster;
 };
 
 #endif // MYTOWER_H

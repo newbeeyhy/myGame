@@ -1,6 +1,7 @@
 #include "mymonster.h"
 #include "mytower.h"
 #include "myblock.h"
+#include <QRandomGenerator>
 
 myTower::myTower(int xx, int yy, const QString &data, QWidget *parent): myCharacter(parent) { //构造函数
     //读取防御塔文件
@@ -90,9 +91,6 @@ void myTower::update(int type) {
         fx = true;
     }
     if (type == 4) { //群攻
-        pro.ATKF *= 2;
-        attk->setSpeed(attk->speed() / 2);
-        attkf->setSpeed(attkf->speed() / 2);
         qg = true;
     }
     if (type == 5) { //击晕
@@ -119,9 +117,14 @@ void myTower::act() { //防御塔活动逻辑
         isin->block[y * 15 + x]->tower = this;
     }
     //优先攻击阻挡单位
-    myMonster *itk = nullptr;
+    myMonster *itk[2] = {nullptr, nullptr};
     if (!bared.empty()) {
-        itk = bared.front();
+        itk[0] = bared.front();
+        if (qg) {
+            if (bared.size() > 1) {
+                itk[1] = bared[1];
+            }
+        }
     }
     else {
         //检测攻击范围内的单位, 选取单位
@@ -135,29 +138,57 @@ void myTower::act() { //防御塔活动逻辑
                 for (; it != u->monster.constEnd(); it++) {
                     if ((*it)->dis() < mn) {
                         mn = (*it)->dis();
-                        itk = *it;
+                        if (qg) {
+                            if (itk[0] != nullptr) {
+                                itk[1] = itk[0];
+                            }
+                        }
+                        itk[0] = *it;
                     }
                 }
             }
         }
     }
-    if (itk != nullptr) {
-        if (itk->X() - this->X() < 0) dir = -1;
-        if (itk->X() - this->X() > 0) dir = 1;
-        if (dir == 1 || dir == 0) this->setnowm(attk);
-        if (dir == -1) this->setnowm(attkf);
-        hit(itk);
-        if (!bared.empty()) {
-            if (bared.front()->alive == false) {
+    for (int i = 0; i < (qg?2:1); i++) {
+        if (itk[i] != nullptr) {
+            if (itk[i]->X() - this->X() < 0) dir = -1;
+            if (itk[i]->X() - this->X() > 0) dir = 1;
+            if (dir == 1 || dir == 0) this->setnowm(attk);
+            if (dir == -1) this->setnowm(attkf);
+            hit(itk[i]);
+            if (cd == 0) {
+                if (bd) {
+                    if (itk[i]->bd == 0) {
+                        itk[i]->pro.SPD /= 2;
+                        itk[i]->pro.ATKF *= 2;
+                        itk[i]->attk->setSpeed(attk->speed() / 2);
+                        itk[i]->attkf->setSpeed(attkf->speed() / 2);
+                        itk[i]->norm->setSpeed(norm->speed() / 2);
+                        itk[i]->normf->setSpeed(normf->speed() / 2);
+                    }
+                    itk[i]->bd = 20;
+                }
+                if (fx) {
+                    itk[i]->lx = 50;
+                }
+                if (jy) {
+                    int r = QRandomGenerator::global()->bounded(100);
+                    if (r < 20) {
+                        if (itk[i]->xy == 0) itk[i]->stay();
+                        itk[i]->xy = 50;
+                    }
+                }
+            }
+            while (!bared.empty() && bared.front()->alive == false) {
                 cap -= bared.front()->pro.WEI;
                 bared.pop_front();
             }
         }
-    }
-    else {
-        if (dir == 1 || dir == 0) this->setnowm(norm);
-        if (dir == -1) this->setnowm(normf);
-        cd = 0;
+        else {
+            if (dir == 1 || dir == 0) this->setnowm(norm);
+            if (dir == -1) this->setnowm(normf);
+            cd = 0;
+        }
     }
 }
 

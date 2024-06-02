@@ -13,7 +13,8 @@ class myMonster: public myCharacter {
     Q_OBJECT
 
 private:
-    int fs = 0, td = 0, wy = 0, yn = 0;
+    bool fs = false, td = false, wy = false, yn = false;
+    int bd = 0, lx = 0, xy = 0;
     size_t pos = 0;
     std::vector<std::pair<int, int>> path;
     std::vector<std::pair<int, int>> area;
@@ -29,6 +30,7 @@ public:
     void update(int type);
     ~myMonster();
     friend class GameWindow;
+    friend class myTower;
 };
 
 #endif // MYMONSTER_H

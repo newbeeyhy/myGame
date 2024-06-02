@@ -58,6 +58,9 @@ void myCharacter::behit(int damage, int type) { //受击
     else if (type == 2) {
         pro.HP -= damage * (1.0 - double(pro.MDEF) / 100);
     }
+    else if (type == 3) {
+        pro.HP -= damage;
+    }
     if (pro.HP <= 0) alive = false;
 }
 
