@@ -13,7 +13,7 @@ class myMonster: public myCharacter {
     Q_OBJECT
 
 private:
-    bool fs = false, td = false, wy = false, yn = false;
+    bool fs = false, xr = false, wy = false, yn = false, mc = false;
     int bd = 0, lx = 0, xy = 0;
     size_t pos = 0;
     std::vector<std::pair<int, int>> path;
