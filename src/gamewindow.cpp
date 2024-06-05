@@ -752,6 +752,7 @@ void GameWindow::Check() { //检测和更新游戏状态
             ui->labelhpnum->setText(QString::number(hp));
             monster[i]->alive = false;
             monster[i]->death();
+            alivemonster--;
         }
     }
     if (hp == 0) {
