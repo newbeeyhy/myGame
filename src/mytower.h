@@ -17,6 +17,7 @@ public:
     int type = 0;
     int cap = 0;
     bool bd = false, fx = false, qg = false, jy = false, yy = false;
+    int xr = 0;
     std::vector<std::pair<int, int>> area;
     QQueue<class myMonster*> bared;
 

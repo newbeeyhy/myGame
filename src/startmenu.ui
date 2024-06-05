@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>698</width>
-    <height>529</height>
+    <width>816</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,11 +20,17 @@
   <widget class="QPushButton" name="pushButtonStartGame">
    <property name="geometry">
     <rect>
-     <x>270</x>
-     <y>130</y>
-     <width>161</width>
-     <height>51</height>
+     <x>343</x>
+     <y>110</y>
+     <width>130</width>
+     <height>45</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Algerian</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>Start Game</string>
@@ -33,11 +39,17 @@
   <widget class="QPushButton" name="pushButtonExit">
    <property name="geometry">
     <rect>
-     <x>270</x>
-     <y>310</y>
-     <width>161</width>
-     <height>51</height>
+     <x>343</x>
+     <y>290</y>
+     <width>130</width>
+     <height>45</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Algerian</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>Exit</string>
@@ -46,16 +58,25 @@
   <widget class="QPushButton" name="pushButtonLoadGame">
    <property name="geometry">
     <rect>
-     <x>270</x>
-     <y>220</y>
-     <width>161</width>
-     <height>51</height>
+     <x>343</x>
+     <y>200</y>
+     <width>130</width>
+     <height>45</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Algerian</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>Load Game</string>
    </property>
   </widget>
+  <zorder>pushButtonExit</zorder>
+  <zorder>pushButtonStartGame</zorder>
+  <zorder>pushButtonLoadGame</zorder>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>

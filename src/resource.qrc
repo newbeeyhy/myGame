@@ -132,5 +132,7 @@
     <qresource prefix = "/icon">
         <file>recourse/icon/gem.png</file>
     </qresource>
-
+    <qresource prefix = "/background">
+        <file>recourse/background/mountain.png</file>
+    </qresource>
 </RCC>

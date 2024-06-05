@@ -689,6 +689,23 @@ void GameWindow::RemoveDeath() { //移除死亡单位
     n = monster.size();
     for (int i = 0; i < n; i++) {
         if (monster[i]->alive == false && monster[i]->beset == true) {
+            if (monster[i]->fs == true) {
+                monster[i]->alive = true;
+                monster[i]->pro.HP = monster[i]->pro.maxHP; 
+            }
+            if (monster[i]->wy == true) {
+                int x = monster[i]->X() / 100, y = monster[i]->Y() / 100;
+                int dx[9] = {-1, -1, -1, 0, 0, 0, 1, 1, 1};
+                int dy[9] = {-1, 0, 1, -1, 0, 1, -1, 0, 1};
+                for (int j = 0; j < 9; j++) {
+                    if (x + dx[j] >= 0 && x + dx[j] < 15 && y + dy[j] >= 0 && y + dy[j] < 9) {
+                        myBlock *u = monster[i]->isin->block[(y + dy[j]) * 15 + (x + dx[j])];
+                        if (u->tower != nullptr) {
+                            u->tower->behit(100, 3);
+                        }
+                    }
+                }
+            }
             cost += monster[i]->pro.VAL;
             ui->labelcostnum->setText(QString::number(cost));
             monster[i]->belong->monster.remove(monster[i]->id);
@@ -708,7 +725,7 @@ void GameWindow::RemoveDeath() { //移除死亡单位
             tower[i]->belong->tower = nullptr;
             int r = QRandomGenerator::global()->bounded(100);
             if (r < 20) {
-                int x = QRandomGenerator::global()->bounded(1, 9);
+                int x = QRandomGenerator::global()->bounded(1, 10);
                 if (buffque[0] == 0) {
                     buffque[0] = x;
                 }

@@ -100,8 +100,8 @@ void myMonster::update(int type) {
     if (type == 4) { //急速
         pro.SPD *= 2;
     }
-    if (type == 5) { //涂毒
-        td = 1;
+    if (type == 5) { //削弱
+        xr = 1;
     }
     if (type == 6) { //亡语
         wy = 1;
@@ -110,8 +110,13 @@ void myMonster::update(int type) {
         yn = 1;
     }
     if (type == 8) { //力量
+        pro.TATK *= 2;
         pro.PATK *= 2;
         pro.MATK *= 2;
+    }
+    if (type == 9) { //闪现
+        sx = 1;
+        sxcd = 0;
     }
 }
 
@@ -139,11 +144,37 @@ void myMonster::act() { //怪物行动逻辑
         }
         return;
     }
+    if (sx && sxcd != 0) {
+        sxcd--;
+    }
     //更新所在地块
     int bx = this->X() / 100, by = this->Y() / 100;
     if (belong != nullptr) belong->monster.remove(id);
     belong = isin->block[by * 15 + bx];
     isin->block[by * 15 + bx]->monster.insert(id, this);
+    //闪现
+    if (belong->tower != nullptr && sx && sxcd == 0) {
+        sxcd = 250;
+        if (pos >= path.size()) return;
+        int x = this->X(), y = this->Y(), d = 110;
+        if (abs(x - path[pos].first) < d && abs(y - path[pos].second) < d) {
+            d -= (abs(x - path[pos].first) + abs(y - path[pos].second));
+            Move(path[pos].first, path[pos].second);
+            x = path[pos].first; y = path[pos].second;
+            pos++;
+        }
+        int dx = (path[pos].first - x) / std::max(1, abs(path[pos].first - x)), dy = (path[pos].second - y) / std::max(1, abs(path[pos].second - y));
+        if (dir != dx) {
+            if (dir == 1 || dir == 0) this->setnowm(norm);
+            if (dir == -1) this->setnowm(normf);
+        }
+        if (dx != 0) dir = dx;
+        Move(x - this->width() / 2 + dx * d, y - this->height() / 2 + dy * d);
+        bx = this->X() / 100; by = this->Y() / 100;
+        if (belong != nullptr) belong->monster.remove(id);
+        belong = isin->block[by * 15 + bx];
+        isin->block[by * 15 + bx]->monster.insert(id, this);
+    }
     //检测阻挡
     if (belong->tower != nullptr) {
         if (bebared == false && belong->tower->pro.WEI - belong->tower->cap >= this->pro.WEI) {
@@ -221,6 +252,14 @@ void myMonster::act() { //怪物行动逻辑
         if (dir == 1 || dir == 0) this->setnowm(attk);
         if (dir == -1) this->setnowm(attkf);
         hit(itk);
+        if (cd == 0) {
+            if (xr) {
+                itk->pro.TATK /= 2;
+                itk->pro.PATK /= 2;
+                itk->pro.MATK /= 2;
+                itk->xr = 50;
+            }
+        }
         if (belong->tower != nullptr && bebared == true) {
             if (belong->tower->alive == false) {
                 belong->tower = nullptr;

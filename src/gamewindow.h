@@ -48,7 +48,7 @@ private:
     int cost = 0;
     int hp = 5;
     int buffnum[8] = {1, 1, 1, 1, 1, 1, 1, 1};
-    int buffque[2] = {0, 0};
+    int buffque[2] = {6, 0};
     int newbufftype = 0;
 
     Ui::GameWindow *ui;

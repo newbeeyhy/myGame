@@ -503,6 +503,11 @@
      <height>28</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Algerian</family>
+    </font>
+   </property>
    <property name="text">
     <string>save</string>
    </property>
@@ -515,6 +520,11 @@
      <width>93</width>
      <height>28</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Algerian</family>
+    </font>
    </property>
    <property name="text">
     <string>exit</string>

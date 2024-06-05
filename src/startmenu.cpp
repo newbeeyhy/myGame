@@ -1,12 +1,20 @@
 #include "startmenu.h"
 #include "ui_startmenu.h"
 #include <QFileDialog>
+#include <QPixmap>
+#include <QLabel>
 #include <QDebug>
 
 StartMenu::StartMenu(QString *file_, QDialog *parent): QDialog(parent), ui(new Ui::StartMenu) {
     file = file_;
     ui->setupUi(this);
     this->setWindowTitle("Main Menu");
+    QLabel *label = new QLabel(this);
+    label->setPixmap(QPixmap(tr(":/background/recourse/background/mountain.png")));
+    label->setGeometry(0, 0, 816, 480);
+    label->setScaledContents(true);
+    label->lower();
+    label->show();
 }
 
 StartMenu::~StartMenu() {

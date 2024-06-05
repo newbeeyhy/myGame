@@ -110,6 +110,14 @@ void myTower::act() { //防御塔活动逻辑
     if (alive == false || beset == false) return;
     this->raise();
     this->blood->raise();
+    if (xr) {
+        xr--;
+        if (xr == 0) {
+            pro.PATK *= 2;
+            pro.MATK *= 2;
+            pro.TATK *= 2;
+        }
+    }
     //更新所在地块
     if (belong == nullptr) {
         int x = this->X() / 100, y = this->Y() / 100;
@@ -117,6 +125,10 @@ void myTower::act() { //防御塔活动逻辑
         isin->block[y * 15 + x]->tower = this;
     }
     //优先攻击阻挡单位
+    while (!bared.empty() && bared.front()->alive == false) {
+        cap -= bared.front()->pro.WEI;
+        bared.pop_front();
+    }
     myMonster *itk[2] = {nullptr, nullptr};
     if (!bared.empty()) {
         itk[0] = bared.front();
@@ -126,7 +138,7 @@ void myTower::act() { //防御塔活动逻辑
             }
         }
     }
-    else {
+    if (bared.empty() || (qg && (itk[0] == nullptr || itk[1] == nullptr))){
         //检测攻击范围内的单位, 选取单位
         int x = this->X() / 100, y = this->Y() / 100, mn = 0x7fffffff;
         size_t m = area.size();
@@ -136,6 +148,9 @@ void myTower::act() { //防御塔活动逻辑
                 myBlock *u = isin->block[(y + dy) * 15 + (x + dx)];
                 QMap<int, myMonster*>::const_iterator it = u->monster.constBegin();
                 for (; it != u->monster.constEnd(); it++) {
+                    if ((*it)->yn == true && this->type == 1) { //怪物隐匿
+                        continue;
+                    } 
                     if ((*it)->dis() < mn) {
                         mn = (*it)->dis();
                         if (qg) {
@@ -149,10 +164,13 @@ void myTower::act() { //防御塔活动逻辑
             }
         }
     }
+    qDebug() << itk[0] << itk[1];
+    qDebug() << bared.size();
     for (int i = 0; i < (qg?2:1); i++) {
         if (itk[i] != nullptr) {
             if (itk[i]->X() - this->X() < 0) dir = -1;
-            if (itk[i]->X() - this->X() > 0) dir = 1;
+            else if (itk[i]->X() - this->X() > 0) dir = 1;
+            else dir = 0;
             if (dir == 1 || dir == 0) this->setnowm(attk);
             if (dir == -1) this->setnowm(attkf);
             hit(itk[i]);
