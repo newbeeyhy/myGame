@@ -164,8 +164,6 @@ void myTower::act() { //防御塔活动逻辑
             }
         }
     }
-    qDebug() << itk[0] << itk[1];
-    qDebug() << bared.size();
     for (int i = 0; i < (qg?2:1); i++) {
         if (itk[i] != nullptr) {
             if (itk[i]->X() - this->X() < 0) dir = -1;

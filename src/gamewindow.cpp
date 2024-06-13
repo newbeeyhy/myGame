@@ -689,10 +689,6 @@ void GameWindow::RemoveDeath() { //移除死亡单位
     n = monster.size();
     for (int i = 0; i < n; i++) {
         if (monster[i]->alive == false && monster[i]->beset == true) {
-            if (monster[i]->fs == true) {
-                monster[i]->alive = true;
-                monster[i]->pro.HP = monster[i]->pro.maxHP; 
-            }
             if (monster[i]->wy == true) {
                 int x = monster[i]->X() / 100, y = monster[i]->Y() / 100;
                 int dx[9] = {-1, -1, -1, 0, 0, 0, 1, 1, 1};
@@ -705,6 +701,12 @@ void GameWindow::RemoveDeath() { //移除死亡单位
                         }
                     }
                 }
+            }
+            if (monster[i]->fs == true) {
+                monster[i]->alive = true;
+                monster[i]->pro.HP = monster[i]->pro.maxHP;
+                monster[i]->fs = false;
+                break;
             }
             cost += monster[i]->pro.VAL;
             ui->labelcostnum->setText(QString::number(cost));
